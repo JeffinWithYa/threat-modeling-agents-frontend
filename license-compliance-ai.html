@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Report</title>
+</head>
+
+<style>
+    body {
+        background-color: #f5f5f5a1;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    h1 {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        text-align: center;
+    }
+
+    h3 {
+        margin-top: 1%;
+        text-align: center;
+    }
+
+    .identification-progress-title {
+        margin-top: 1.2%
+    }
+
+    .divider {
+        border-bottom: 1px solid #b5b5b5ab;
+        text-align: center;
+        width: 90%;
+    }
+
+    .main-container {
+        width: 100%;
+        height: 800px;
+        margin-top: 1%;
+    }
+
+    .progress-bar-container {
+        margin-top: 1%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2%;
+    }
+
+    .main-content-info-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 700px;
+        padding-bottom: 4%;
+        padding-top: 7%;
+    }
+
+    .main-container-left {
+        display: flex;
+        flex-direction: column;
+        width: 45%;
+        height: 700px;
+    }
+
+    .main-container-right {
+        display: flex;
+        flex-direction: column;
+        width: 55%;
+        height: 700px;
+        border-left: 1px solid #e7e6e6ab;
+    }
+
+    .license-table-container {
+        width: 100%;
+        height: 700px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 4%;
+        padding-right: 7%;
+    }
+
+    .pie-chart-container {
+        width: 100%;
+        height: 330px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+    }
+
+    .table td,
+    .table th {
+        padding: 0.15rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th {
+        font-size: 13px;
+    }
+
+    tr {
+        font-size: 11px;
+    }
+
+    .colour-ref-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgb(105 101 101 / 5%);
+    }
+
+    #myChart {
+        width: 235px;
+    }
+
+    .button-solid {
+        border: none;
+        background-color: rgb(105 101 101 / 5%);
+        color: rgb(104, 180, 250);
+        font-weight: bold;
+    }
+
+    #drop-down-license-detail-btn {
+        display: block;
+        border: none;
+        width: 100%;
+        background-color: rgb(226 226 226);
+    }
+
+    .button-solid:focus,
+    #drop-down-license-detail-btn:focus {
+        border: none;
+        outline: none;
+    }
+
+    .show {
+        display: table-cell;
+        border-top: 0;
+    }
+
+    td.show {
+        border-top: 1px solid white;
+        padding: 0;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .component-row {
+        width: 100%;
+    }
+
+    .license-ref-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-flow: nowrap;
+        width: 100%;
+    }
+
+    .colour-ref-license-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15px;
+    }
+
+    .license-label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 80%;
+        font-size: 12px;
+    }
+
+    .label {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 100%;
+        color: rgb(0 0 0 / 51%);
+    }
+
+    .license-name {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 100%;
+        flex-flow: wrap;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .colour-ref-license {
+        width: 100%;
+        height: 15px;
+        border-radius: 3px;
+    }
+
+    .component-license-detail {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        background-color: rgb(236 232 232);
+    }
+
+    .comp-detail-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 33.3%;
+    }
+
+    .comp-label {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-left: 15%;
+        width: 100%;
+        font-size: 12px;
+        color: #777777;
+    }
+
+    .comp-info {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        padding-left: 15%;
+        font-size: 12px;
+    }
+
+    #progress-bar {
+        height: 95px;
+        padding-left: 3.5px;
+    }
+
+    .progress-bar-child-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 65%;
+    }
+
+    #oss-percentage{
+        font-size: 25px;
+        display: block;
+        height: auto;
+        background-color: #f5f5f5a1;
+        padding-top: 28px;
+        font-size: 35px;
+    }
+
+    .identified,
+    .pending,
+    .original {
+        width: 30px;
+        height: 10px;
+    }
+
+    .table th.license-head-column {
+        text-align: left;
+        padding-left: 10%;
+    }
+
+    .drop-down-license-detail-container {
+        border-bottom: 1.5px solid #82828291;
+    }
+
+    .drop-down-license-detail-container button {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .show-license-detail {
+        display: block;
+    }
+
+    .original-percentage {
+        color: #A1A1AA;
+        margin-left: 3px;
+    }
+
+    .percentage-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+</style>
+
+<body>
+    <header>
+        <h1>Identification Report</h1>
+        <div class="divider"></div>
+    </header>
+    <div class="main-container">
+
+        <div class="progress-bar-container">
+            <h3 class="identification-progress-title">Original vs OSS</h3>
+            <div class="progress-bar-child-container">
+                <div class="percentage-container">
+                    <span id="oss-percentage"></span>
+                </div>
+                <canvas id="progress-bar"></canvas>
+                <div>
+                    <span class="original-percentage"></span>
+                </div>
+            </div>
+            <div>
+                <p id="total-files"></p>
+            </div>
+
+            <div class="divider"> </div>
+        </div>
+
+        <div class="main-content-info-container">
+            <div class="main-container-left">
+                <div>
+                    <h3>License Reference</h3>
+                    <div class="pie-chart-container">
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <h3 class="identified-license-detail-title">Identified License Detail</h3>
+                    <div class="drop-down-license-detail-container">
+                        <button id="drop-down-license-detail-btn"> Identified License Detail &#8711;</button>
+                    </div>
+                    <div class="drop-down-license-detail hide">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="body-license-detail-table">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="main-container-right">
+                <h3>Identified License Report</h3>
+                <div class="license-table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="license-head-column" scope="col">License</th>
+                                <th scope="col">Component Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body-license-table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const identifiedData = '[{"components":[{"name":"tslib","vendor":null,"url":null,"purl":"pkg:npm/tslib","version":"2.4.1"}],"value":1,"label":"0BSD"},{"components":[{"name":"before-after-hook","vendor":null,"url":null,"purl":"pkg:npm/before-after-hook","version":"2.2.3"},{"name":"didyoumean","vendor":null,"url":null,"purl":"pkg:npm/didyoumean","version":"1.2.2"},{"name":"doctrine","vendor":null,"url":null,"purl":"pkg:npm/doctrine","version":"3.0.0"},{"name":"ecdsa-sig-formatter","vendor":null,"url":null,"purl":"pkg:npm/ecdsa-sig-formatter","version":"1.0.11"},{"name":"doctrine","vendor":null,"url":null,"purl":"pkg:npm/doctrine","version":"2.1.0"},{"name":"eslint-visitor-keys","vendor":null,"url":null,"purl":"pkg:npm/eslint-visitor-keys","version":"3.4.1"},{"name":"human-signals","vendor":null,"url":null,"purl":"pkg:npm/human-signals","version":"4.3.1"},{"name":"human-signals","vendor":null,"url":null,"purl":"pkg:npm/human-signals","version":"2.1.0"},{"name":"ts-interface-checker","vendor":null,"url":null,"purl":"pkg:npm/ts-interface-checker","version":"0.1.13"}],"value":9,"label":"Apache-2.0"},{"components":[{"name":"damerau-levenshtein","vendor":null,"url":null,"purl":"pkg:npm/damerau-levenshtein","version":"1.0.8"},{"name":"esrecurse","vendor":null,"url":null,"purl":"pkg:npm/esrecurse","version":"4.3.0"},{"name":"esutils","vendor":null,"url":null,"purl":"pkg:npm/esutils","version":"2.0.3"},{"name":"estraverse","vendor":null,"url":null,"purl":"pkg:npm/estraverse","version":"5.3.0"},{"name":"glob-to-regexp","vendor":null,"url":null,"purl":"pkg:npm/glob-to-regexp","version":"0.4.1"},{"name":"eslint-scope","vendor":null,"url":null,"purl":"pkg:npm/eslint-scope","version":"7.2.0"},{"name":"uri-js","vendor":null,"url":null,"purl":"pkg:npm/uri-js","version":"4.4.1"}],"value":7,"label":"BSD-2-Clause"},{"components":[{"name":"qs","vendor":null,"url":null,"purl":"pkg:npm/qs","version":"6.9.7"},{"name":"asn1js","vendor":null,"url":null,"purl":"pkg:npm/asn1js","version":"3.0.5"},{"name":"buffer-equal-constant-time","vendor":null,"url":null,"purl":"pkg:npm/buffer-equal-constant-time","version":"1.0.1"},{"name":"diff","vendor":null,"url":null,"purl":"pkg:npm/diff","version":"5.1.0"},{"name":"esquery","vendor":null,"url":null,"purl":"pkg:npm/esquery","version":"1.5.0"},{"name":"qs","vendor":null,"url":null,"purl":"pkg:npm/qs","version":"6.11.2"},{"name":"source-map-js","vendor":null,"url":null,"purl":"pkg:npm/source-map-js","version":"1.0.2"}],"value":7,"label":"BSD-3-Clause"},{"components":[{"name":"language-subtag-registry","vendor":null,"url":null,"purl":"pkg:npm/language-subtag-registry","version":"0.3.22"}],"value":1,"label":"CC0-1.0"},{"components":[{"name":"anymatch","vendor":null,"url":null,"purl":"pkg:npm/anymatch","version":"3.1.3"},{"name":"ast-types-flow","vendor":null,"url":null,"purl":"pkg:npm/ast-types-flow","version":"0.0.7"},{"name":"glob-parent","vendor":null,"url":null,"purl":"pkg:npm/glob-parent","version":"5.1.2"},{"name":"deprecation","vendor":null,"url":null,"purl":"pkg:npm/deprecation","version":"2.3.1"},{"name":"eslint-import-resolver-typescript","vendor":null,"url":null,"purl":"pkg:npm/eslint-import-resolver-typescript","version":"3.5.5"},{"name":"fastq","vendor":null,"url":null,"purl":"pkg:npm/fastq","version":"1.15.0"},{"name":"flatted","vendor":null,"url":null,"purl":"pkg:npm/flatted","version":"3.2.7"},{"name":"glob","vendor":null,"url":null,"purl":"pkg:npm/glob","version":"7.1.7"},{"name":"glob-parent","vendor":null,"url":null,"purl":"pkg:npm/glob-parent","version":"6.0.2"},{"name":"graceful-fs","vendor":null,"url":null,"purl":"pkg:npm/graceful-fs","version":"4.2.11"},{"name":"fs.realpath","vendor":null,"url":null,"purl":"pkg:npm/fs.realpath","version":"1.0.0"},{"name":"inflight","vendor":null,"url":null,"purl":"pkg:npm/inflight","version":"1.0.6"},{"name":"inherits","vendor":null,"url":null,"purl":"pkg:npm/inherits","version":"2.0.4"},{"name":"isexe","vendor":null,"url":null,"purl":"pkg:npm/isexe","version":"2.0.0"},{"name":"minimatch","vendor":null,"url":null,"purl":"pkg:npm/minimatch","version":"3.1.2"},{"name":"once","vendor":null,"url":null,"purl":"pkg:npm/once","version":"1.4.0"},{"name":"picocolors","vendor":null,"url":null,"purl":"pkg:npm/picocolors","version":"1.0.0"},{"name":"rimraf","vendor":null,"url":null,"purl":"pkg:npm/rimraf","version":"3.0.2"},{"name":"signal-exit","vendor":null,"url":null,"purl":"pkg:npm/signal-exit","version":"3.0.7"},{"name":"glob","vendor":null,"url":null,"purl":"pkg:npm/glob","version":"7.1.6"},{"name":"universal-user-agent","vendor":null,"url":null,"purl":"pkg:npm/universal-user-agent","version":"6.0.0"},{"name":"which","vendor":null,"url":null,"purl":"pkg:npm/which","version":"2.0.2"},{"name":"yallist","vendor":null,"url":null,"purl":"pkg:npm/yallist","version":"4.0.0"},{"name":"wrappy","vendor":null,"url":null,"purl":"pkg:npm/wrappy","version":"1.0.2"}],"value":24,"label":"ISC"},{"components":[{"name":"next13-ai-saas","vendor":"AntonioErdeljac","url":"https://github.com/AntonioErdeljac/next13-ai-saas","purl":"pkg:github/antonioerdeljac/next13-ai-saas","version":"18ac8da"},{"name":"snakecase-keys","vendor":null,"url":null,"purl":"pkg:npm/snakecase-keys","version":"3.2.1"},{"name":"csstype","vendor":null,"url":null,"purl":"pkg:npm/csstype","version":"3.1.1"},{"name":"react-direction","vendor":null,"url":null,"purl":"pkg:npm/react-direction","version":"1.0.1"},{"name":"primitive","vendor":null,"url":null,"purl":"pkg:npm/primitive","version":"1.0.1"},{"name":"body-parser","vendor":null,"url":null,"purl":"pkg:npm/body-parser","version":"1.19.2"},{"name":"btoa-lite","vendor":null,"url":null,"purl":"pkg:npm/btoa-lite","version":"1.0.0"},{"name":"keygrip","vendor":null,"url":null,"purl":"pkg:npm/keygrip","version":"1.0.2"},{"name":"mime","vendor":null,"url":null,"purl":"pkg:npm/mime","version":"1.3.2"},{"name":"node-fetch","vendor":null,"url":null,"purl":"pkg:npm/node-fetch","version":"2.6.2"},{"name":"form-data","vendor":null,"url":null,"purl":"pkg:npm/form-data","version":"3.0.1"},{"name":"send","vendor":null,"url":null,"purl":"pkg:npm/send","version":"0.17.1"},{"name":"acorn-jsx","vendor":null,"url":null,"purl":"pkg:npm/acorn-jsx","version":"5.3.2"},{"name":"ansi-styles","vendor":null,"url":null,"purl":"pkg:npm/ansi-styles","version":"4.3.0"},{"name":"any-promise","vendor":null,"url":null,"purl":"pkg:npm/any-promise","version":"1.3.0"},{"name":"arg","vendor":null,"url":null,"purl":"pkg:npm/arg","version":"5.0.2"},{"name":"aria-hidden","vendor":null,"url":null,"purl":"pkg:npm/aria-hidden","version":"1.2.3"},{"name":"array-buffer-byte-length","vendor":null,"url":null,"purl":"pkg:npm/array-buffer-byte-length","version":"1.0.0"},{"name":"array-includes","vendor":null,"url":null,"purl":"pkg:npm/array-includes","version":"3.1.6"},{"name":"array-union","vendor":null,"url":null,"purl":"pkg:npm/array-union","version":"2.1.0"},{"name":"array.prototype.flat","vendor":null,"url":null,"purl":"pkg:npm/array.prototype.flat","version":"1.3.1"},{"name":"aggregate-error","vendor":null,"url":null,"purl":"pkg:npm/aggregate-error","version":"3.1.0"},{"name":"array.prototype.flatmap","vendor":null,"url":null,"purl":"pkg:npm/array.prototype.flatmap","version":"1.3.1"},{"name":"array.prototype.tosorted","vendor":null,"url":null,"purl":"pkg:npm/array.prototype.tosorted","version":"1.1.1"},{"name":"ansi-regex","vendor":null,"url":null,"purl":"pkg:npm/ansi-regex","version":"5.0.1"},{"name":"asynckit","vendor":null,"url":null,"purl":"pkg:npm/asynckit","version":"0.4.0"},{"name":"ajv","vendor":null,"url":null,"purl":"pkg:npm/ajv","version":"6.12.6"},{"name":"autoprefixer","vendor":null,"url":null,"purl":"pkg:npm/autoprefixer","version":"10.4.14"},{"name":"available-typed-arrays","vendor":null,"url":null,"purl":"pkg:npm/available-typed-arrays","version":"1.0.5"},{"name":"axios","vendor":null,"url":null,"purl":"pkg:npm/axios","version":"1.4.0"},{"name":"bail","vendor":null,"url":null,"purl":"pkg:npm/bail","version":"2.0.2"},{"name":"balanced-match","vendor":null,"url":null,"purl":"pkg:npm/balanced-match","version":"1.0.2"},{"name":"binary-extensions","vendor":null,"url":null,"purl":"pkg:npm/binary-extensions","version":"2.2.0"},{"name":"bottleneck","vendor":null,"url":null,"purl":"pkg:npm/bottleneck","version":"2.19.5"},{"name":"bplist-parser","vendor":null,"url":null,"purl":"pkg:npm/bplist-parser","version":"0.2.0"},{"name":"brace-expansion","vendor":null,"url":null,"purl":"pkg:npm/brace-expansion","version":"1.1.11"},{"name":"braces","vendor":null,"url":null,"purl":"pkg:npm/braces","version":"3.0.2"},{"name":"call-bind","vendor":null,"url":null,"purl":"pkg:npm/call-bind","version":"1.0.2"},{"name":"callsites","vendor":null,"url":null,"purl":"pkg:npm/callsites","version":"3.1.0"},{"name":"camelcase-css","vendor":null,"url":null,"purl":"pkg:npm/camelcase-css","version":"2.0.1"},{"name":"camelcase-keys","vendor":null,"url":null,"purl":"pkg:npm/camelcase-keys","version":"6.2.2"},{"name":"camelcase","vendor":null,"url":null,"purl":"pkg:npm/camelcase","version":"5.3.1"},{"name":"chokidar","vendor":null,"url":null,"purl":"pkg:npm/chokidar","version":"3.5.3"},{"name":"clean-stack","vendor":null,"url":null,"purl":"pkg:npm/clean-stack","version":"2.2.0"},{"name":"client-only","vendor":null,"url":null,"purl":"pkg:npm/client-only","version":"0.0.1"},{"name":"clsx","vendor":null,"url":null,"purl":"pkg:npm/clsx","version":"1.2.1"},{"name":"cmdk","vendor":null,"url":null,"purl":"pkg:npm/cmdk","version":"0.2.0"},{"name":"primitive","vendor":null,"url":null,"purl":"pkg:npm/primitive","version":"1.0.0"},{"name":"bundle-name","vendor":null,"url":null,"purl":"pkg:npm/bundle-name","version":"3.0.0"},{"name":"react-remove-scroll","vendor":null,"url":null,"purl":"pkg:npm/react-remove-scroll","version":"2.5.4"},{"name":"color-convert","vendor":null,"url":null,"purl":"pkg:npm/color-convert","version":"2.0.1"},{"name":"color-name","vendor":null,"url":null,"purl":"pkg:npm/color-name","version":"1.1.4"},{"name":"combined-stream","vendor":null,"url":null,"purl":"pkg:npm/combined-stream","version":"1.0.8"},{"name":"command-score","vendor":null,"url":null,"purl":"pkg:npm/command-score","version":"0.1.2"},{"name":"commander","vendor":null,"url":null,"purl":"pkg:npm/commander","version":"4.1.1"},{"name":"cross-spawn","vendor":null,"url":null,"purl":"pkg:npm/cross-spawn","version":"7.0.3"},{"name":"cookie","vendor":null,"url":null,"purl":"pkg:npm/cookie","version":"0.5.0"},{"name":"cssesc","vendor":null,"url":null,"purl":"pkg:npm/cssesc","version":"3.0.0"},{"name":"csstype","vendor":null,"url":null,"purl":"pkg:npm/csstype","version":"3.1.2"},{"name":"debug","vendor":null,"url":null,"purl":"pkg:npm/debug","version":"4.3.4"},{"name":"decode-named-character-reference","vendor":null,"url":null,"purl":"pkg:npm/decode-named-character-reference","version":"1.0.2"},{"name":"character-entities","vendor":null,"url":null,"purl":"pkg:npm/character-entities","version":"2.0.2"},{"name":"deep-is","vendor":null,"url":null,"purl":"pkg:npm/deep-is","version":"0.1.4"},{"name":"deepmerge","vendor":null,"url":null,"purl":"pkg:npm/deepmerge","version":"4.2.2"},{"name":"define-properties","vendor":null,"url":null,"purl":"pkg:npm/define-properties","version":"1.2.0"},{"name":"delayed-stream","vendor":null,"url":null,"purl":"pkg:npm/delayed-stream","version":"1.0.0"},{"name":"dequal","vendor":null,"url":null,"purl":"pkg:npm/dequal","version":"2.0.3"},{"name":"detect-node-es","vendor":null,"url":null,"purl":"pkg:npm/detect-node-es","version":"1.1.0"},{"name":"dir-glob","vendor":null,"url":null,"purl":"pkg:npm/dir-glob","version":"3.0.1"},{"name":"dlv","vendor":null,"url":null,"purl":"pkg:npm/dlv","version":"1.1.3"},{"name":"dot-case","vendor":null,"url":null,"purl":"pkg:npm/dot-case","version":"3.0.4"},{"name":"concat-map","vendor":null,"url":null,"purl":"pkg:npm/concat-map","version":"0.0.1"},{"name":"emoji-regex","vendor":null,"url":null,"purl":"pkg:npm/emoji-regex","version":"9.2.2"},{"name":"es-abstract","vendor":null,"url":null,"purl":"pkg:npm/es-abstract","version":"1.21.2"},{"name":"es-shim-unscopables","vendor":null,"url":null,"purl":"pkg:npm/es-shim-unscopables","version":"1.0.0"},{"name":"es-to-primitive","vendor":null,"url":null,"purl":"pkg:npm/es-to-primitive","version":"1.2.1"},{"name":"escalade","vendor":null,"url":null,"purl":"pkg:npm/escalade","version":"3.1.1"},{"name":"escape-string-regexp","vendor":null,"url":null,"purl":"pkg:npm/escape-string-regexp","version":"4.0.0"},{"name":"eslint-import-resolver-node","vendor":null,"url":null,"purl":"pkg:npm/eslint-import-resolver-node","version":"0.3.7"},{"name":"chalk","vendor":null,"url":null,"purl":"pkg:npm/chalk","version":"4.1.2"},{"name":"slash","vendor":null,"url":null,"purl":"pkg:npm/slash","version":"4.0.0"},{"name":"eslint-module-utils","vendor":null,"url":null,"purl":"pkg:npm/eslint-module-utils","version":"2.8.0"},{"name":"eslint-plugin-import","vendor":null,"url":null,"purl":"pkg:npm/eslint-plugin-import","version":"2.27.5"},{"name":"es-set-tostringtag","vendor":null,"url":null,"purl":"pkg:npm/es-set-tostringtag","version":"2.0.1"},{"name":"default-browser-id","vendor":null,"url":null,"purl":"pkg:npm/default-browser-id","version":"3.0.0"},{"name":"eslint-plugin-react","vendor":null,"url":null,"purl":"pkg:npm/eslint-plugin-react","version":"7.32.2"},{"name":"resolve","vendor":null,"url":null,"purl":"pkg:npm/resolve","version":"2.0.0-next.4"},{"name":"define-lazy-prop","vendor":null,"url":null,"purl":"pkg:npm/define-lazy-prop","version":"3.0.0"},{"name":"execa","vendor":null,"url":null,"purl":"pkg:npm/execa","version":"7.1.1"},{"name":"extend","vendor":null,"url":null,"purl":"pkg:npm/extend","version":"3.0.2"},{"name":"default-browser","vendor":null,"url":null,"purl":"pkg:npm/default-browser","version":"4.0.0"},{"name":"fast-json-stable-stringify","vendor":null,"url":null,"purl":"pkg:npm/fast-json-stable-stringify","version":"2.1.0"},{"name":"fast-levenshtein","vendor":null,"url":null,"purl":"pkg:npm/fast-levenshtein","version":"2.0.6"},{"name":"file-entry-cache","vendor":null,"url":null,"purl":"pkg:npm/file-entry-cache","version":"6.0.1"},{"name":"fill-range","vendor":null,"url":null,"purl":"pkg:npm/fill-range","version":"7.0.1"},{"name":"find-up","vendor":null,"url":null,"purl":"pkg:npm/find-up","version":"5.0.0"},{"name":"flat-cache","vendor":null,"url":null,"purl":"pkg:npm/flat-cache","version":"3.0.4"},{"name":"follow-redirects","vendor":null,"url":null,"purl":"pkg:npm/follow-redirects","version":"1.15.2"},{"name":"for-each","vendor":null,"url":null,"purl":"pkg:npm/for-each","version":"0.3.3"},{"name":"form-data","vendor":null,"url":null,"purl":"pkg:npm/form-data","version":"4.0.0"},{"name":"fraction.js","vendor":null,"url":null,"purl":"pkg:npm/fraction.js","version":"4.2.0"},{"name":"fsevents","vendor":null,"url":null,"purl":"pkg:npm/fsevents","version":"2.3.2"},{"name":"function-bind","vendor":null,"url":null,"purl":"pkg:npm/function-bind","version":"1.1.1"},{"name":"function.prototype.name","vendor":null,"url":null,"purl":"pkg:npm/function.prototype.name","version":"1.1.5"},{"name":"functions-have-names","vendor":null,"url":null,"purl":"pkg:npm/functions-have-names","version":"1.2.3"},{"name":"get-intrinsic","vendor":null,"url":null,"purl":"pkg:npm/get-intrinsic","version":"1.2.1"},{"name":"get-nonce","vendor":null,"url":null,"purl":"pkg:npm/get-nonce","version":"1.0.1"},{"name":"get-stream","vendor":null,"url":null,"purl":"pkg:npm/get-stream","version":"6.0.1"},{"name":"get-symbol-description","vendor":null,"url":null,"purl":"pkg:npm/get-symbol-description","version":"1.0.0"},{"name":"fast-deep-equal","vendor":null,"url":null,"purl":"pkg:npm/fast-deep-equal","version":"3.1.3"},{"name":"globals","vendor":null,"url":null,"purl":"pkg:npm/globals","version":"13.20.0"},{"name":"globalthis","vendor":null,"url":null,"purl":"pkg:npm/globalthis","version":"1.0.3"},{"name":"goober","vendor":null,"url":null,"purl":"pkg:npm/goober","version":"2.1.13"},{"name":"gopd","vendor":null,"url":null,"purl":"pkg:npm/gopd","version":"1.0.1"},{"name":"graphemer","vendor":null,"url":null,"purl":"pkg:npm/graphemer","version":"1.4.0"},{"name":"has","vendor":null,"url":null,"purl":"pkg:npm/has","version":"1.0.3"},{"name":"has-bigints","vendor":null,"url":null,"purl":"pkg:npm/has-bigints","version":"1.0.2"},{"name":"has-flag","vendor":null,"url":null,"purl":"pkg:npm/has-flag","version":"4.0.0"},{"name":"has-proto","vendor":null,"url":null,"purl":"pkg:npm/has-proto","version":"1.0.1"},{"name":"ignore","vendor":null,"url":null,"purl":"pkg:npm/ignore","version":"5.2.4"},{"name":"import-fresh","vendor":null,"url":null,"purl":"pkg:npm/import-fresh","version":"3.3.0"},{"name":"imurmurhash","vendor":null,"url":null,"purl":"pkg:npm/imurmurhash","version":"0.1.4"},{"name":"indent-string","vendor":null,"url":null,"purl":"pkg:npm/indent-string","version":"4.0.0"},{"name":"inline-style-parser","vendor":null,"url":null,"purl":"pkg:npm/inline-style-parser","version":"0.1.1"},{"name":"internal-slot","vendor":null,"url":null,"purl":"pkg:npm/internal-slot","version":"1.0.5"},{"name":"invariant","vendor":null,"url":null,"purl":"pkg:npm/invariant","version":"2.2.4"},{"name":"is-array-buffer","vendor":null,"url":null,"purl":"pkg:npm/is-array-buffer","version":"3.0.2"},{"name":"is-bigint","vendor":null,"url":null,"purl":"pkg:npm/is-bigint","version":"1.0.4"},{"name":"is-binary-path","vendor":null,"url":null,"purl":"pkg:npm/is-binary-path","version":"2.1.0"},{"name":"is-boolean-object","vendor":null,"url":null,"purl":"pkg:npm/is-boolean-object","version":"1.1.2"},{"name":"is-buffer","vendor":null,"url":null,"purl":"pkg:npm/is-buffer","version":"2.0.5"},{"name":"is-callable","vendor":null,"url":null,"purl":"pkg:npm/is-callable","version":"1.2.7"},{"name":"has-symbols","vendor":null,"url":null,"purl":"pkg:npm/has-symbols","version":"1.0.3"},{"name":"is-date-object","vendor":null,"url":null,"purl":"pkg:npm/is-date-object","version":"1.0.5"},{"name":"is-docker","vendor":null,"url":null,"purl":"pkg:npm/is-docker","version":"3.0.0"},{"name":"is-extglob","vendor":null,"url":null,"purl":"pkg:npm/is-extglob","version":"2.1.1"},{"name":"hast-util-whitespace","vendor":null,"url":null,"purl":"pkg:npm/hast-util-whitespace","version":"2.0.1"},{"name":"is-glob","vendor":null,"url":null,"purl":"pkg:npm/is-glob","version":"4.0.3"},{"name":"is-inside-container","vendor":null,"url":null,"purl":"pkg:npm/is-inside-container","version":"1.0.0"},{"name":"is-negative-zero","vendor":null,"url":null,"purl":"pkg:npm/is-negative-zero","version":"2.0.2"},{"name":"is-core-module","vendor":null,"url":null,"purl":"pkg:npm/is-core-module","version":"2.12.1"},{"name":"is-number","vendor":null,"url":null,"purl":"pkg:npm/is-number","version":"7.0.0"},{"name":"is-number-object","vendor":null,"url":null,"purl":"pkg:npm/is-number-object","version":"1.0.7"},{"name":"has-tostringtag","vendor":null,"url":null,"purl":"pkg:npm/has-tostringtag","version":"1.0.0"},{"name":"is-plain-obj","vendor":null,"url":null,"purl":"pkg:npm/is-plain-obj","version":"4.1.0"},{"name":"is-plain-object","vendor":null,"url":null,"purl":"pkg:npm/is-plain-object","version":"5.0.0"},{"name":"is-path-inside","vendor":null,"url":null,"purl":"pkg:npm/is-path-inside","version":"3.0.3"},{"name":"is-regex","vendor":null,"url":null,"purl":"pkg:npm/is-regex","version":"1.1.4"},{"name":"is-shared-array-buffer","vendor":null,"url":null,"purl":"pkg:npm/is-shared-array-buffer","version":"1.0.2"},{"name":"is-stream","vendor":null,"url":null,"purl":"pkg:npm/is-stream","version":"3.0.0"},{"name":"is-string","vendor":null,"url":null,"purl":"pkg:npm/is-string","version":"1.0.7"},{"name":"is-symbol","vendor":null,"url":null,"purl":"pkg:npm/is-symbol","version":"1.0.4"},{"name":"is-typed-array","vendor":null,"url":null,"purl":"pkg:npm/is-typed-array","version":"1.1.10"},{"name":"js-cookie","vendor":null,"url":null,"purl":"pkg:npm/js-cookie","version":"3.0.1"},{"name":"js-tokens","vendor":null,"url":null,"purl":"pkg:npm/js-tokens","version":"4.0.0"},{"name":"js-yaml","vendor":null,"url":null,"purl":"pkg:npm/js-yaml","version":"4.1.0"},{"name":"json-schema-traverse","vendor":null,"url":null,"purl":"pkg:npm/json-schema-traverse","version":"0.4.1"},{"name":"is-docker","vendor":null,"url":null,"purl":"pkg:npm/is-docker","version":"2.2.1"},{"name":"has-property-descriptors","vendor":null,"url":null,"purl":"pkg:npm/has-property-descriptors","version":"1.0.0"},{"name":"jwa","vendor":null,"url":null,"purl":"pkg:npm/jwa","version":"1.4.1"},{"name":"jws","vendor":null,"url":null,"purl":"pkg:npm/jws","version":"3.2.2"},{"name":"kleur","vendor":null,"url":null,"purl":"pkg:npm/kleur","version":"4.1.5"},{"name":"levn","vendor":null,"url":null,"purl":"pkg:npm/levn","version":"0.4.1"},{"name":"lilconfig","vendor":null,"url":null,"purl":"pkg:npm/lilconfig","version":"2.1.0"},{"name":"lines-and-columns","vendor":null,"url":null,"purl":"pkg:npm/lines-and-columns","version":"1.2.4"},{"name":"lodash.includes","vendor":null,"url":null,"purl":"pkg:npm/lodash.includes","version":"4.3.0"},{"name":"lodash.isboolean","vendor":null,"url":null,"purl":"pkg:npm/lodash.isboolean","version":"3.0.3"},{"name":"lodash.isinteger","vendor":null,"url":null,"purl":"pkg:npm/lodash.isinteger","version":"4.0.4"},{"name":"lodash.isnumber","vendor":null,"url":null,"purl":"pkg:npm/lodash.isnumber","version":"3.0.3"},{"name":"lodash.isplainobject","vendor":null,"url":null,"purl":"pkg:npm/lodash.isplainobject","version":"4.0.6"},{"name":"lodash.isstring","vendor":null,"url":null,"purl":"pkg:npm/lodash.isstring","version":"4.0.1"},{"name":"lodash.merge","vendor":null,"url":null,"purl":"pkg:npm/lodash.merge","version":"4.6.2"},{"name":"lodash.once","vendor":null,"url":null,"purl":"pkg:npm/lodash.once","version":"4.1.1"},{"name":"is-wsl","vendor":null,"url":null,"purl":"pkg:npm/is-wsl","version":"2.2.0"},{"name":"loose-envify","vendor":null,"url":null,"purl":"pkg:npm/loose-envify","version":"1.4.0"},{"name":"lower-case","vendor":null,"url":null,"purl":"pkg:npm/lower-case","version":"2.0.2"},{"name":"json-stable-stringify-without-jsonify","vendor":null,"url":null,"purl":"pkg:npm/json-stable-stringify-without-jsonify","version":"1.0.1"},{"name":"is-weakref","vendor":null,"url":null,"purl":"pkg:npm/is-weakref","version":"1.0.2"},{"name":"map-obj","vendor":null,"url":null,"purl":"pkg:npm/map-obj","version":"4.3.0"},{"name":"mdast-util-definitions","vendor":null,"url":null,"purl":"pkg:npm/mdast-util-definitions","version":"5.1.2"},{"name":"mdast-util-to-hast","vendor":null,"url":null,"purl":"pkg:npm/mdast-util-to-hast","version":"12.3.0"},{"name":"mdast-util-to-string","vendor":null,"url":null,"purl":"pkg:npm/mdast-util-to-string","version":"3.2.0"},{"name":"merge-stream","vendor":null,"url":null,"purl":"pkg:npm/merge-stream","version":"2.0.0"},{"name":"merge2","vendor":null,"url":null,"purl":"pkg:npm/merge2","version":"1.4.1"},{"name":"micromatch","vendor":null,"url":null,"purl":"pkg:npm/micromatch","version":"4.0.5"},{"name":"mime-db","vendor":null,"url":null,"purl":"pkg:npm/mime-db","version":"1.52.0"},{"name":"mime-types","vendor":null,"url":null,"purl":"pkg:npm/mime-types","version":"2.1.35"},{"name":"mimic-fn","vendor":null,"url":null,"purl":"pkg:npm/mimic-fn","version":"4.0.0"},{"name":"minimist","vendor":null,"url":null,"purl":"pkg:npm/minimist","version":"1.2.8"},{"name":"mri","vendor":null,"url":null,"purl":"pkg:npm/mri","version":"1.2.0"},{"name":"mz","vendor":null,"url":null,"purl":"pkg:npm/mz","version":"2.7.0"},{"name":"nanoid","vendor":null,"url":null,"purl":"pkg:npm/nanoid","version":"3.3.6"},{"name":"natural-compare","vendor":null,"url":null,"purl":"pkg:npm/natural-compare","version":"1.4.0"},{"name":"next-themes","vendor":null,"url":null,"purl":"pkg:npm/next-themes","version":"0.2.1"},{"name":"postcss","vendor":null,"url":null,"purl":"pkg:npm/postcss","version":"8.4.14"},{"name":"no-case","vendor":null,"url":null,"purl":"pkg:npm/no-case","version":"3.0.4"},{"name":"normalize-path","vendor":null,"url":null,"purl":"pkg:npm/normalize-path","version":"3.0.0"},{"name":"normalize-range","vendor":null,"url":null,"purl":"pkg:npm/normalize-range","version":"0.1.2"},{"name":"eslint-plugin-jsx-a11y","vendor":null,"url":null,"purl":"pkg:npm/eslint-plugin-jsx-a11y","version":"6.7.1"},{"name":"path-key","vendor":null,"url":null,"purl":"pkg:npm/path-key","version":"4.0.0"},{"name":"object-assign","vendor":null,"url":null,"purl":"pkg:npm/object-assign","version":"4.1.1"},{"name":"object-hash","vendor":null,"url":null,"purl":"pkg:npm/object-hash","version":"3.0.0"},{"name":"locate-path","vendor":null,"url":null,"purl":"pkg:npm/locate-path","version":"6.0.0"},{"name":"node-fetch-native","vendor":null,"url":null,"purl":"pkg:npm/node-fetch-native","version":"1.0.1"},{"name":"object.assign","vendor":null,"url":null,"purl":"pkg:npm/object.assign","version":"4.1.4"},{"name":"object.entries","vendor":null,"url":null,"purl":"pkg:npm/object.entries","version":"1.1.6"},{"name":"object.fromentries","vendor":null,"url":null,"purl":"pkg:npm/object.fromentries","version":"2.0.6"},{"name":"object.hasown","vendor":null,"url":null,"purl":"pkg:npm/object.hasown","version":"1.1.2"},{"name":"object.values","vendor":null,"url":null,"purl":"pkg:npm/object.values","version":"1.1.6"},{"name":"onetime","vendor":null,"url":null,"purl":"pkg:npm/onetime","version":"6.0.0"},{"name":"object-keys","vendor":null,"url":null,"purl":"pkg:npm/object-keys","version":"1.1.1"},{"name":"open","vendor":null,"url":null,"purl":"pkg:npm/open","version":"9.1.0"},{"name":"axios","vendor":null,"url":null,"purl":"pkg:npm/axios","version":"0.26.1"},{"name":"language-tags","vendor":null,"url":null,"purl":"pkg:npm/language-tags","version":"1.0.5"},{"name":"p-locate","vendor":null,"url":null,"purl":"pkg:npm/p-locate","version":"5.0.0"},{"name":"parent-module","vendor":null,"url":null,"purl":"pkg:npm/parent-module","version":"1.0.1"},{"name":"path-exists","vendor":null,"url":null,"purl":"pkg:npm/path-exists","version":"4.0.0"},{"name":"path-is-absolute","vendor":null,"url":null,"purl":"pkg:npm/path-is-absolute","version":"1.0.1"},{"name":"path-key","vendor":null,"url":null,"purl":"pkg:npm/path-key","version":"3.1.1"},{"name":"path-parse","vendor":null,"url":null,"purl":"pkg:npm/path-parse","version":"1.0.7"},{"name":"path-to-regexp","vendor":null,"url":null,"purl":"pkg:npm/path-to-regexp","version":"6.2.1"},{"name":"path-type","vendor":null,"url":null,"purl":"pkg:npm/path-type","version":"4.0.0"},{"name":"performance-now","vendor":null,"url":null,"purl":"pkg:npm/performance-now","version":"2.1.0"},{"name":"object-inspect","vendor":null,"url":null,"purl":"pkg:npm/object-inspect","version":"1.12.3"},{"name":"picomatch","vendor":null,"url":null,"purl":"pkg:npm/picomatch","version":"2.3.1"},{"name":"pify","vendor":null,"url":null,"purl":"pkg:npm/pify","version":"2.3.0"},{"name":"p-limit","vendor":null,"url":null,"purl":"pkg:npm/p-limit","version":"3.1.0"},{"name":"postcss-import","vendor":null,"url":null,"purl":"pkg:npm/postcss-import","version":"15.1.0"},{"name":"postcss-js","vendor":null,"url":null,"purl":"pkg:npm/postcss-js","version":"4.0.1"},{"name":"postcss-load-config","vendor":null,"url":null,"purl":"pkg:npm/postcss-load-config","version":"4.0.1"},{"name":"postcss-nested","vendor":null,"url":null,"purl":"pkg:npm/postcss-nested","version":"6.0.1"},{"name":"postcss-selector-parser","vendor":null,"url":null,"purl":"pkg:npm/postcss-selector-parser","version":"6.0.13"},{"name":"postcss-value-parser","vendor":null,"url":null,"purl":"pkg:npm/postcss-value-parser","version":"4.2.0"},{"name":"prelude-ls","vendor":null,"url":null,"purl":"pkg:npm/prelude-ls","version":"1.2.1"},{"name":"proxy-from-env","vendor":null,"url":null,"purl":"pkg:npm/proxy-from-env","version":"1.1.0"},{"name":"punycode","vendor":null,"url":null,"purl":"pkg:npm/punycode","version":"2.3.0"},{"name":"pvtsutils","vendor":null,"url":null,"purl":"pkg:npm/pvtsutils","version":"1.3.2"},{"name":"pvutils","vendor":null,"url":null,"purl":"pkg:npm/pvutils","version":"1.1.3"},{"name":"queue-microtask","vendor":null,"url":null,"purl":"pkg:npm/queue-microtask","version":"1.2.3"},{"name":"raf","vendor":null,"url":null,"purl":"pkg:npm/raf","version":"3.4.1"},{"name":"react-is","vendor":null,"url":null,"purl":"pkg:npm/react-is","version":"16.13.1"},{"name":"react-markdown","vendor":null,"url":null,"purl":"pkg:npm/react-markdown","version":"8.0.7"},{"name":"comma-separated-tokens","vendor":null,"url":null,"purl":"pkg:npm/comma-separated-tokens","version":"2.0.3"},{"name":"react-hot-toast","vendor":null,"url":null,"purl":"pkg:npm/react-hot-toast","version":"2.4.1"},{"name":"react-is","vendor":null,"url":null,"purl":"pkg:npm/react-is","version":"18.2.0"},{"name":"space-separated-tokens","vendor":null,"url":null,"purl":"pkg:npm/space-separated-tokens","version":"2.0.2"},{"name":"react-remove-scroll","vendor":null,"url":null,"purl":"pkg:npm/react-remove-scroll","version":"2.5.5"},{"name":"react-remove-scroll-bar","vendor":null,"url":null,"purl":"pkg:npm/react-remove-scroll-bar","version":"2.3.4"},{"name":"read-cache","vendor":null,"url":null,"purl":"pkg:npm/read-cache","version":"1.0.0"},{"name":"readdirp","vendor":null,"url":null,"purl":"pkg:npm/readdirp","version":"3.6.0"},{"name":"regenerator-runtime","vendor":null,"url":null,"purl":"pkg:npm/regenerator-runtime","version":"0.13.11"},{"name":"regexp.prototype.flags","vendor":null,"url":null,"purl":"pkg:npm/regexp.prototype.flags","version":"1.5.0"},{"name":"remark-parse","vendor":null,"url":null,"purl":"pkg:npm/remark-parse","version":"10.0.2"},{"name":"remark-rehype","vendor":null,"url":null,"purl":"pkg:npm/remark-rehype","version":"10.1.0"},{"name":"resolve","vendor":null,"url":null,"purl":"pkg:npm/resolve","version":"1.22.2"},{"name":"resolve-from","vendor":null,"url":null,"purl":"pkg:npm/resolve-from","version":"4.0.0"},{"name":"resolve-pkg-maps","vendor":null,"url":null,"purl":"pkg:npm/resolve-pkg-maps","version":"1.0.0"},{"name":"reusify","vendor":null,"url":null,"purl":"pkg:npm/reusify","version":"1.0.4"},{"name":"run-applescript","vendor":null,"url":null,"purl":"pkg:npm/run-applescript","version":"5.0.0"},{"name":"execa","vendor":null,"url":null,"purl":"pkg:npm/execa","version":"5.1.1"},{"name":"is-stream","vendor":null,"url":null,"purl":"pkg:npm/is-stream","version":"2.0.1"},{"name":"mimic-fn","vendor":null,"url":null,"purl":"pkg:npm/mimic-fn","version":"2.1.0"},{"name":"npm-run-path","vendor":null,"url":null,"purl":"pkg:npm/npm-run-path","version":"4.0.1"},{"name":"npm-run-path","vendor":null,"url":null,"purl":"pkg:npm/npm-run-path","version":"5.1.0"},{"name":"strip-final-newline","vendor":null,"url":null,"purl":"pkg:npm/strip-final-newline","version":"2.0.0"},{"name":"run-parallel","vendor":null,"url":null,"purl":"pkg:npm/run-parallel","version":"1.2.0"},{"name":"safe-buffer","vendor":null,"url":null,"purl":"pkg:npm/safe-buffer","version":"5.2.1"},{"name":"react-style-singleton","vendor":null,"url":null,"purl":"pkg:npm/react-style-singleton","version":"2.2.1"},{"name":"shebang-regex","vendor":null,"url":null,"purl":"pkg:npm/shebang-regex","version":"3.0.0"},{"name":"side-channel","vendor":null,"url":null,"purl":"pkg:npm/side-channel","version":"1.0.4"},{"name":"slash","vendor":null,"url":null,"purl":"pkg:npm/slash","version":"3.0.0"},{"name":"snake-case","vendor":null,"url":null,"purl":"pkg:npm/snake-case","version":"3.0.4"},{"name":"snakecase-keys","vendor":null,"url":null,"purl":"pkg:npm/snakecase-keys","version":"5.4.4"},{"name":"safe-regex-test","vendor":null,"url":null,"purl":"pkg:npm/safe-regex-test","version":"1.0.0"},{"name":"streamsearch","vendor":null,"url":null,"purl":"pkg:npm/streamsearch","version":"1.1.0"},{"name":"shebang-command","vendor":null,"url":null,"purl":"pkg:npm/shebang-command","version":"2.0.0"},{"name":"string.prototype.trim","vendor":null,"url":null,"purl":"pkg:npm/string.prototype.trim","version":"1.2.7"},{"name":"string.prototype.trimend","vendor":null,"url":null,"purl":"pkg:npm/string.prototype.trimend","version":"1.0.6"},{"name":"string.prototype.trimstart","vendor":null,"url":null,"purl":"pkg:npm/string.prototype.trimstart","version":"1.0.6"},{"name":"strip-ansi","vendor":null,"url":null,"purl":"pkg:npm/strip-ansi","version":"6.0.1"},{"name":"strip-final-newline","vendor":null,"url":null,"purl":"pkg:npm/strip-final-newline","version":"3.0.0"},{"name":"sade","vendor":null,"url":null,"purl":"pkg:npm/sade","version":"1.8.1"},{"name":"strip-json-comments","vendor":null,"url":null,"purl":"pkg:npm/strip-json-comments","version":"3.1.1"},{"name":"style-to-object","vendor":null,"url":null,"purl":"pkg:npm/style-to-object","version":"0.4.1"},{"name":"string.prototype.matchall","vendor":null,"url":null,"purl":"pkg:npm/string.prototype.matchall","version":"4.0.8"},{"name":"sucrase","vendor":null,"url":null,"purl":"pkg:npm/sucrase","version":"3.32.0"},{"name":"supports-color","vendor":null,"url":null,"purl":"pkg:npm/supports-color","version":"7.2.0"},{"name":"supports-preserve-symlinks-flag","vendor":null,"url":null,"purl":"pkg:npm/supports-preserve-symlinks-flag","version":"1.0.0"},{"name":"swr","vendor":null,"url":null,"purl":"pkg:npm/swr","version":"1.3.0"},{"name":"synckit","vendor":null,"url":null,"purl":"pkg:npm/synckit","version":"0.8.5"},{"name":"strip-bom","vendor":null,"url":null,"purl":"pkg:npm/strip-bom","version":"3.0.0"},{"name":"thenify","vendor":null,"url":null,"purl":"pkg:npm/thenify","version":"3.3.1"},{"name":"thenify-all","vendor":null,"url":null,"purl":"pkg:npm/thenify-all","version":"1.6.0"},{"name":"titleize","vendor":null,"url":null,"purl":"pkg:npm/titleize","version":"3.0.0"},{"name":"to-no-case","vendor":null,"url":null,"purl":"pkg:npm/to-no-case","version":"1.0.2"},{"name":"to-regex-range","vendor":null,"url":null,"purl":"pkg:npm/to-regex-range","version":"5.0.1"},{"name":"to-snake-case","vendor":null,"url":null,"purl":"pkg:npm/to-snake-case","version":"1.0.0"},{"name":"styled-jsx","vendor":null,"url":null,"purl":"pkg:npm/styled-jsx","version":"5.1.1"},{"name":"trim-lines","vendor":null,"url":null,"purl":"pkg:npm/trim-lines","version":"3.0.1"},{"name":"trough","vendor":null,"url":null,"purl":"pkg:npm/trough","version":"2.1.0"},{"name":"tailwindcss","vendor":null,"url":null,"purl":"pkg:npm/tailwindcss","version":"3.3.2"},{"name":"tsconfig-paths","vendor":null,"url":null,"purl":"pkg:npm/tsconfig-paths","version":"3.14.2"},{"name":"tsutils","vendor":null,"url":null,"purl":"pkg:npm/tsutils","version":"3.21.0"},{"name":"type-check","vendor":null,"url":null,"purl":"pkg:npm/type-check","version":"0.4.0"},{"name":"typed-array-length","vendor":null,"url":null,"purl":"pkg:npm/typed-array-length","version":"1.0.4"},{"name":"property-information","vendor":null,"url":null,"purl":"pkg:npm/property-information","version":"6.2.0"},{"name":"unbox-primitive","vendor":null,"url":null,"purl":"pkg:npm/unbox-primitive","version":"1.0.2"},{"name":"unified","vendor":null,"url":null,"purl":"pkg:npm/unified","version":"10.1.2"},{"name":"unist-util-generated","vendor":null,"url":null,"purl":"pkg:npm/unist-util-generated","version":"2.0.1"},{"name":"unist-util-is","vendor":null,"url":null,"purl":"pkg:npm/unist-util-is","version":"5.2.1"},{"name":"unist-util-stringify-position","vendor":null,"url":null,"purl":"pkg:npm/unist-util-stringify-position","version":"3.0.3"},{"name":"unist-util-visit","vendor":null,"url":null,"purl":"pkg:npm/unist-util-visit","version":"4.1.2"},{"name":"unist-util-visit-parents","vendor":null,"url":null,"purl":"pkg:npm/unist-util-visit-parents","version":"5.1.3"},{"name":"universal-github-app-jwt","vendor":null,"url":null,"purl":"pkg:npm/universal-github-app-jwt","version":"1.1.1"},{"name":"untildify","vendor":null,"url":null,"purl":"pkg:npm/untildify","version":"4.0.0"},{"name":"to-space-case","vendor":null,"url":null,"purl":"pkg:npm/to-space-case","version":"1.0.0"},{"name":"use-callback-ref","vendor":null,"url":null,"purl":"pkg:npm/use-callback-ref","version":"1.3.0"},{"name":"use-sidecar","vendor":null,"url":null,"purl":"pkg:npm/use-sidecar","version":"1.1.2"},{"name":"use-sync-external-store","vendor":null,"url":null,"purl":"pkg:npm/use-sync-external-store","version":"1.2.0"},{"name":"util-deprecate","vendor":null,"url":null,"purl":"pkg:npm/util-deprecate","version":"1.0.2"},{"name":"uvu","vendor":null,"url":null,"purl":"pkg:npm/uvu","version":"0.5.6"},{"name":"vfile","vendor":null,"url":null,"purl":"pkg:npm/vfile","version":"5.3.7"},{"name":"vfile-message","vendor":null,"url":null,"purl":"pkg:npm/vfile-message","version":"3.1.4"},{"name":"watchpack","vendor":null,"url":null,"purl":"pkg:npm/watchpack","version":"2.4.0"},{"name":"webcrypto-core","vendor":null,"url":null,"purl":"pkg:npm/webcrypto-core","version":"1.7.7"},{"name":"which-boxed-primitive","vendor":null,"url":null,"purl":"pkg:npm/which-boxed-primitive","version":"1.0.2"},{"name":"unist-util-position","vendor":null,"url":null,"purl":"pkg:npm/unist-util-position","version":"4.0.4"},{"name":"yocto-queue","vendor":null,"url":null,"purl":"pkg:npm/yocto-queue","version":"0.1.0"},{"name":"zod","vendor":null,"url":null,"purl":"pkg:npm/zod","version":"3.21.4"},{"name":"onetime","vendor":null,"url":null,"purl":"pkg:npm/onetime","version":"5.1.2"},{"name":"update-browserslist-db","vendor":null,"url":null,"purl":"pkg:npm/update-browserslist-db","version":"1.0.11"},{"name":"tapable","vendor":null,"url":null,"purl":"pkg:npm/tapable","version":"2.2.1"}],"value":332,"label":"MIT"},{"components":[{"name":"type-fest","vendor":null,"url":null,"purl":"pkg:npm/type-fest","version":"2.19.0"},{"name":"type-fest","vendor":null,"url":null,"purl":"pkg:npm/type-fest","version":"0.20.2"}],"value":2,"label":"MIT,CC0-1.0"},{"components":[{"name":"argparse","vendor":null,"url":null,"purl":"pkg:npm/argparse","version":"2.0.1"}],"value":1,"label":"Python-2.0"},{"components":[{"name":"big-integer","vendor":null,"url":null,"purl":"pkg:npm/big-integer","version":"1.6.51"}],"value":1,"label":"Unlicense"}]';
+        const auxSummaryData = '{"summary":{"matchFiles":634,"noMatchFiles":20,"filterFiles":23250,"totalFiles":23904},"identified":{"scan":20,"total":20},"pending":614,"original":0}';
+        const auxData = Array.from(JSON.parse(identifiedData));
+        const summaryData = JSON.parse(auxSummaryData);
+        const totalFiles = summaryData.pending + summaryData.summary.noMatchFiles + summaryData.identified.total + summaryData.original;
+        const originalFiles = summaryData.summary.noMatchFiles + summaryData.original;
+        const ossFiles = (summaryData.identified.total * 100) / totalFiles;
+        const pendingFiles = (summaryData.pending * 100) / totalFiles;
+        const percentage = ossFiles + pendingFiles;
+        const labels = [];
+        const values = [];
+        const rowDataTable = {};
+
+        function rowData() {
+            auxData.forEach((d) => {
+                if (rowDataTable[d.label] === undefined) {
+                    rowDataTable[d.label] = {
+                        components: {},
+                        componentCount: 0,
+                    };
+                }
+
+                d.components.forEach((component) => {
+                    if (rowDataTable[d.label].components[component.name] === undefined) {
+                        rowDataTable[d.label].components[component.name] = {
+                            versions: [],
+                            vendor: component.vendor,
+                            purl: component.purl,
+                        };
+                    }
+                    rowDataTable[d.label].components[component.name].versions.push(component.version);
+                    rowDataTable[d.label].components[component.name].versions.sort();
+                });
+                rowDataTable[d.label].componentCount = Object.keys(rowDataTable[d.label].components).length;
+            });
+        }
+
+        rowData();
+
+        Object.entries(rowDataTable).forEach(([key, value]) => {
+            labels.push(key);
+            values.push(value.componentCount);
+        });
+
+
+        const color = [
+            '#E8B34B',
+            '#E22C2C',
+            '#5754D0',
+            '#9F69C0',
+            '#FE7F10',
+            '#E56399',
+            '#E637BF',
+            '#474647',
+            '#153243',
+            '#2DE1C2',
+            '#F05365',
+            '#A2D729',
+            '#3C91E6',
+            '#FA824C',
+            '#C94277',
+            '#E56B6F',
+            '#F71735',
+            '#011627',
+            '#724E91',
+            '#7D451B',
+            '#9BE564',
+        ];
+
+        function insertLicenseRow() {
+            const bodyLicenseTable = document.querySelector('#body-license-table');
+            let counter = 0;
+            Object.keys(rowDataTable).forEach((key) => {
+                const tr = document.createElement('tr');
+                const tdColor = document.createElement('td');
+                const licenseRefContainer = document.createElement('div');
+                licenseRefContainer.classList.add('license-ref-container');
+                const colourRefLicenseContainer = document.createElement('div');
+                colourRefLicenseContainer.classList.add('colour-ref-license-container');
+                const colourRefLicense = document.createElement('div');
+                colourRefLicense.classList.add('colour-ref-license');
+                colourRefLicense.style.backgroundColor = color[counter % color.length];
+                colourRefLicenseContainer.appendChild(colourRefLicense);
+                const licenseLabel = document.createElement('div');
+                licenseLabel.classList.add('license-label');
+                const licenseName = document.createElement('div');
+                licenseName.classList.add('license-name');
+                const licenseNameP = document.createElement('p');
+                licenseNameP.innerText = key;
+                licenseName.appendChild(licenseNameP);
+                licenseLabel.appendChild(licenseName);
+
+                licenseRefContainer.appendChild(colourRefLicenseContainer);
+                licenseRefContainer.appendChild(licenseLabel);
+
+                tdColor.appendChild(licenseRefContainer);
+                tr.appendChild(tdColor);
+
+                // count components
+                const tdCount = document.createElement('td');
+                tdCount.classList.add('width-license-count');
+
+                const textCount = document.createTextNode(`${rowDataTable[key].componentCount}`);
+                tdCount.appendChild(textCount);
+                tr.appendChild(tdCount);
+
+                bodyLicenseTable.appendChild(tr);
+
+                counter += 1;
+            });
+        }
+
+        insertLicenseRow();
+
+        function dropDown(id) {
+            const nodes = document.getElementsByClassName(id);
+            for (let i = 0; i < nodes.length; i += 1) {
+                if (nodes[i].classList.contains('hide')) {
+                    nodes[i].classList.remove('hide');
+                    nodes[i].classList.add('show');
+                } else {
+                    nodes[i].classList.remove('show');
+                    nodes[i].classList.add('hide');
+                }
+            }
+        }
+
+        function addButtonListener() {
+            const btn = document.querySelectorAll('.button-solid');
+
+            btn.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    dropDown(event.target.id);
+                });
+            });
+        }
+
+        function insertLicenseDetailRow() {
+            const bodyLicenseTable = document.querySelector('#body-license-detail-table');
+
+            let counter = 0;
+            Object.keys(rowDataTable).forEach((key) => {
+                const tr = document.createElement('tr');
+                const tdColor = document.createElement('td');
+                const licenseRefContainer = document.createElement('div');
+                licenseRefContainer.classList.add('license-ref-container');
+                const colourRefLicenseContainer = document.createElement('div');
+                colourRefLicenseContainer.classList.add('colour-ref-license-container');
+                const colourRefLicense = document.createElement('div');
+                colourRefLicense.classList.add('colour-ref-license');
+                colourRefLicense.style.backgroundColor = color[counter % color.length];
+                colourRefLicenseContainer.appendChild(colourRefLicense);
+                const licenseLabel = document.createElement('div');
+                licenseLabel.classList.add('license-label');
+                const label = document.createElement('div');
+                label.classList.add('label');
+                const labelP = document.createElement('p');
+                labelP.innerText = 'License';
+                label.appendChild(labelP);
+                licenseLabel.appendChild(label);
+                const licenseName = document.createElement('div');
+                licenseName.classList.add('license-name');
+                const licenseNameP = document.createElement('p');
+                licenseNameP.innerText = key;
+                licenseName.appendChild(licenseNameP);
+                licenseLabel.appendChild(licenseName);
+
+                licenseRefContainer.appendChild(colourRefLicenseContainer);
+                licenseRefContainer.appendChild(licenseLabel);
+
+                tdColor.appendChild(licenseRefContainer);
+                tr.appendChild(tdColor);
+
+                // count components
+                const tdCount = document.createElement('td');
+                tdCount.classList.add('width-license-count');
+                const btn = `<button class="button-solid" id="${counter}">${rowDataTable[key].componentCount} component found &#8711;</button>`;
+
+                tdCount.innerHTML = btn;
+                tr.appendChild(tdCount);
+                bodyLicenseTable.appendChild(tr);
+                let rows = '';
+                for (const [compName, value] of Object.entries(rowDataTable[key].components)) {
+                    const version =
+                        value.versions.length > 1
+                            ? `${value.versions.toString().replace(/,/g, ' , ')} &#10;&#13; (${value.versions.length} versions)`
+                            : value.versions.toString();
+                    rows += `<tr class="component-row">
+                    <td colspan="2" class="${counter} hide">
+                      <div class="component-license-detail">
+                        <div class="comp-detail-container">
+                          <div class="comp-label">
+                            <p>Component</p>
+                          </div>
+                        <div class="comp-info">
+                            <p>${compName}</p>
+                          </div>
+                        </div>
+                         <div class="comp-detail-container">
+                         <div class="comp-label">
+                          <p>Purl</p>
+                         </div>
+                         <div class="comp-info">
+                          <p>${value.purl}</p>
+                        </div>
+                        </div>
+                        <div class="comp-detail-container">
+                          <div class="comp-label">
+                            <p>Versions</p>
+                          </div>
+                          <div class="comp-info">
+                            <p>${version}</p>
+                          </div>
+                        </div>
+                        </div>
+
+                    </td>
+                </tr>`;
+                }
+
+                bodyLicenseTable.innerHTML += rows;
+
+                counter += 1;
+            });
+            addButtonListener();
+        }
+        insertLicenseDetailRow();
+
+        function pieChart() {
+            const data = {
+                labels,
+                datasets: [
+                    {
+                        label: 'My First dataset',
+                        backgroundColor: color,
+                        borderColor: 'rgb(255, 255, 255)',
+                        data: values,
+                    },
+                ],
+            };
+            const config = {
+                type: 'pie',
+                data,
+                options: {
+                    elements: {
+                        arc: {
+                            borderWidth: 1,
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                },
+            };
+            const myChart = new Chart(document.getElementById('myChart'), config);
+        }
+
+        pieChart();
+
+        function progressBar() {
+            const spanPercentage = document.querySelector('#oss-percentage');
+            spanPercentage.innerHTML=`${Math.floor(percentage)}%`;
+            const totalFilesText = document.querySelector('#total-files');
+            totalFilesText.innerText = `total files: ${totalFiles}`;
+
+            const chart = new Chart(document.getElementById('progress-bar'), {
+                type: 'bar',
+                data: {
+                    labels: [``],
+                    datasets: [
+                        {
+                            label: `OSS: ${summaryData.identified.total}`,
+                            data: [summaryData.identified.total],
+                            borderWidth: 0,
+                            backgroundColor: ['#22C55E'],
+                            barThickness: 34,
+                        },
+                        {
+                            label: `Pending: ${summaryData.pending}`,
+                            data: [summaryData.pending],
+                            borderWidth: 0,
+                            backgroundColor: ['#F97316'],
+                            barThickness: 34,
+                        },
+                        {
+                            label: `Original: ${originalFiles}`,
+                            data: [originalFiles],
+                            borderWidth: 0,
+                            backgroundColor: ['#A1A1AA'],
+                            barThickness: 34,
+                        },
+                    ],
+                },
+                options: {
+                    plugins: {
+                        tooltip: { enabled: false },
+
+                    },
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                            },
+                            display: false,
+                        },
+                        x: {
+                            max: totalFiles,
+                            stacked: true,
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                display: false,
+                            },
+                        },
+                    },
+                },
+                plugins: [
+                    {
+                        id: 'line',
+                        afterDraw: (chart) => {
+                            const meta = chart.getDatasetMeta(1); // Gets datasets[1]
+                            if (!meta.hidden) {
+                                meta.data.forEach((element) => {
+                                    const { x } = element.tooltipPosition();
+                                    chart.ctx.beginPath();
+                                    chart.ctx.moveTo(x, 30);
+                                    chart.ctx.strokeStyle = 'black';
+                                    chart.ctx.lineTo(x, 90);
+                                    chart.ctx.stroke();
+                                    chart.ctx.save();
+                                });
+                            }
+                        },
+                    },
+                ],
+            });
+        }
+
+        progressBar();
+
+        document.getElementById('drop-down-license-detail-btn').addEventListener('click', () => {
+            const aux = document.querySelector('.drop-down-license-detail');
+            if (aux.classList.contains('hide')) {
+                aux.classList.remove('hide');
+                aux.classList.add('show-license-detail');
+            } else {
+                aux.classList.remove('show-license-detail');
+                aux.classList.add('hide');
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
