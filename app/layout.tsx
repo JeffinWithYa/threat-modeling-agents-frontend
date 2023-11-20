@@ -11,8 +11,8 @@ import './globals.css'
 const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Killer Compliance Helper',
-  description: 'AI Powered Software Compliance Consulting',
+  title: 'Threat Modeling with Generative AI',
+  description: 'AI Powered Threat Modeling Solution',
 }
 
 export default async function RootLayout({

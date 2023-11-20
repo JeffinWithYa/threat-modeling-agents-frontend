@@ -12,14 +12,15 @@ export const LandingHero = () => {
   return (
     <div className="text-white font-bold py-36 text-center space-y-5">
       <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
-        <h1>Killer Compliance Helper is for:</h1>
+        <h1>AI Threat Modeling is for:</h1>
         <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           <TypewriterComponent
             options={{
               strings: [
-                "Understanding software licenses.",
-                "Frameworks Advising.",
-                "Compliance Consulting.",
+                "Applying STRIDE to your app components.",
+                "Mitigating threats to your app.",
+                "Creating data flow diagrams.",
+                "Creating attack trees for your app."
               ],
               autoStart: true,
               loop: true,

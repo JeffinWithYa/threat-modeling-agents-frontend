@@ -40,7 +40,7 @@ export const FreeCounter = ({
             </p>
           </div>
           <Button onClick={proModal.onOpen} variant="premium" className="w-full">
-            Support JJ
+            Support
             
           </Button>
         </CardContent>

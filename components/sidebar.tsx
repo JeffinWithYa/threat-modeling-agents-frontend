@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Montserrat } from 'next/font/google'
-import { Grid, GraduationCap, User, MessageSquare, Settings, Info, ListChecks } from "lucide-react";
+import { Grid, GraduationCap, User, MessageSquare, Settings, Info, ListChecks, Component, Network, Code } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -19,21 +19,27 @@ const routes = [
     color: "text-yellow-500"
   },
   {
-    label: 'Understand Licenses',
-    icon: GraduationCap,
-    href: '/licenses',
-    color: "text-emerald-500",
-  },
-  {
-    label: 'Persona Consultants',
-    icon: User,
+    label: 'STRIDE Report',
+    icon: Code,
     color: "text-pink-700",
     href: '/persona',
   },
   {
-    label: 'Frameworks Advisor',
-    icon: ListChecks,
+    label: 'Data Flow Diagram',
+    icon: Component,
     color: "text-violet-700",
+    href: '/frameworks',
+  },
+  {
+    label: 'Attack Tree',
+    icon: Network,
+    color: "text-yellow-500",
+    href: '/frameworks',
+  },
+  {
+    label: 'Stakeholder Report',
+    icon: User,
+    color: "text-pink-700",
     href: '/frameworks',
   }
 ];
@@ -73,7 +79,7 @@ export const Sidebar = ({
     <div className="px-3 py-2 flex-1">
       <Link href="/dashboard" className="flex items-center pl-3 mb-14">
         <h1 className={cn("text-2xl font-bold", poppins.className)}>
-          Killer Compliance Helper
+          Threat Modeling with Generative AI
         </h1>
       </Link>
       <div className="space-y-1">

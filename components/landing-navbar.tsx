@@ -18,7 +18,7 @@ export const LandingNavbar = () => {
       <Link href="/" className="flex items-center">
 
         <h1 className={cn("text-2xl font-bold text-white", font.className)}>
-          Killer Compliance Helper
+          Threat Modeling with Generative AI
         </h1>
       </Link>
       <div className="flex items-center gap-x-2">
