@@ -15,7 +15,7 @@ export const tools = [
     icon: Code,
     color: "text-pink-700",
     bgColor: "bg-pink-700/10",
-    href: '/persona',
+    href: '/stride',
   },
   {
     label: 'Data Flow Diagram',

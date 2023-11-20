@@ -22,7 +22,7 @@ const routes = [
     label: 'STRIDE Report',
     icon: Code,
     color: "text-pink-700",
-    href: '/persona',
+    href: '/stride',
   },
   {
     label: 'Data Flow Diagram',

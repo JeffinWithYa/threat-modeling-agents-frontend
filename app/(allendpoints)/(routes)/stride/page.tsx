@@ -21,6 +21,9 @@ import { UserAvatar } from "@/components/user-avatar";
 import { Empty } from "@/components/ui/empty";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect } from "react";
+import { Textarea } from "@/components/ui/textarea"
+
 
 
 import { formSchema, amountOptions } from "./constants";
@@ -41,6 +44,20 @@ const PersonaPage = () => {
       amount: "Open source friendly."
     }
   });
+
+  // Extract needed methods from useForm
+  const { setValue, watch } = form;
+
+  // Watch for changes in the dropdown selection
+  const selectedOption = watch("amount");
+
+  // Use useEffect to update the prompt field when the dropdown changes
+  useEffect(() => {
+    const selectedAmountOption = amountOptions.find(option => option.value === selectedOption);
+    if (selectedAmountOption) {
+      setValue("prompt", selectedAmountOption.value); // assuming each option has a description field
+    }
+  }, [selectedOption, setValue]);
 
   const isLoading = form.formState.isSubmitting;
   
@@ -76,8 +93,8 @@ const PersonaPage = () => {
   return ( 
     <div>
       <Heading
-        title="Persona Consulting"
-        description="Get consulting advice from both sides of the equation by using different personalities: Zag who prefers to freely share software, and Nyx who prefers to keep strict rights over their creations."
+        title="Apply the STRIDE Methodology to every component of your system."
+        description="Generate a report that describes the threats to your system and how to mitigate them."
         icon={MessageSquare}
         iconColor="text-violet-500"
         bgColor="bg-violet-500/10"
@@ -105,11 +122,13 @@ const PersonaPage = () => {
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-8">
                     <FormControl className="m-0 p-0">
-                      <Input
+                      <Textarea
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading} 
-                        placeholder="How should we license our cool new software tool?" 
+                        placeholder="Describe your app architecture here." 
                         {...field}
+                        minRows={3} // Set the minimum number of rows
+                        autoResize // Enable auto-resizing
                       />
                     </FormControl>
                   </FormItem>
