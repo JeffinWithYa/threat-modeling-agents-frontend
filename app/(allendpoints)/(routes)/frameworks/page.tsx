@@ -30,6 +30,9 @@ const FrameworksPage = () => {
   const proModal = useProModal();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
+  const [imageData, setImageData] = useState<string | null>(null);
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,12 +45,16 @@ const FrameworksPage = () => {
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const userMessage: ChatCompletionRequestMessage = { role: "user", content: values.prompt };
-      const systemMessage: ChatCompletionRequestMessage = { role: "system", content: values.amount };
-      const newMessages = [...messages, systemMessage, userMessage];
-      
-      const response = await axios.post('/api/frameworks', { messages: newMessages });
-      setMessages((current) => [...current, userMessage, response.data]);
+      const userMessage = values.prompt; // Extract the user's message from the form values      
+      const response = await axios.post('/api/frameworks', { description: userMessage }, { responseType: 'blob' });
+
+      // Create an object URL from the blob
+      const imageUrl = URL.createObjectURL(response.data);
+
+    // Update states
+    setMessages((current) => [...current, { role: 'user', content: userMessage }]);
+    setImageData(imageUrl); // Update image data state
+
       
       form.reset();
     } catch (error: any) {
@@ -148,22 +155,12 @@ const FrameworksPage = () => {
           {messages.length === 0 && !isLoading && (
             <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
           )}
-          <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((message) => (
-              <div 
-                key={message.content} 
-                className={cn(
-                  "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                  message.role === "user" ? "bg-white border border-black/10" : "bg-slate-100",
-                )}
-              >
-                {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <p className="text-sm">
-                  {message.content}
-                </p>
-              </div>
-            ))}
-          </div>
+          {imageData && (
+            <div className="flex justify-center my-4">
+              <img src={imageData} alt="Generated Diagram" className="max-w-full h-auto" />
+            </div>
+          )}
+
         </div>
       </div>
     </div>
