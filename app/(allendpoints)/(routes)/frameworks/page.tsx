@@ -21,6 +21,8 @@ import { UserAvatar } from "@/components/user-avatar";
 import { Empty } from "@/components/ui/empty";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea"
+import { useEffect } from "react";
 
 
 import { formSchema, amountOptions } from "./constants";
@@ -40,6 +42,21 @@ const FrameworksPage = () => {
       amount: "Open source friendly."
     }
   });
+
+  // Extract needed methods from useForm
+  const { setValue, watch } = form;
+
+  // Watch for changes in the dropdown selection
+  const selectedOption = watch("amount");
+
+  // Use useEffect to update the prompt field when the dropdown changes
+  useEffect(() => {
+    const selectedAmountOption = amountOptions.find(option => option.value === selectedOption);
+    if (selectedAmountOption) {
+      setValue("prompt", selectedAmountOption.value); // assuming each option has a description field
+    }
+  }, [selectedOption, setValue]);
+
 
   const isLoading = form.formState.isSubmitting;
   
@@ -71,8 +88,8 @@ const FrameworksPage = () => {
   return ( 
     <div>
       <Heading
-        title="Frameworks Advisor"
-        description="Get advice on implementing various frameworks in your organization."
+        title="Data Flow Diagram Generator"
+        description="Use generative AI to create a data flow diagram for your app architecture."
         icon={MessageSquare}
         iconColor="text-violet-500"
         bgColor="bg-violet-500/10"
@@ -100,11 +117,11 @@ const FrameworksPage = () => {
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-8">
                     <FormControl className="m-0 p-0">
-                      <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading} 
-                        placeholder="Ex: How do we implement the selected framework? With this framework implemented, who can I sell to?" 
-                        {...field}
+                      <Textarea
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                          disabled={isLoading} 
+                          placeholder="Describe your app architecture here." 
+                          {...field}
                       />
                     </FormControl>
                   </FormItem>
@@ -141,7 +158,7 @@ const FrameworksPage = () => {
               )}
             />
               <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
-                Get Advice
+                Get Data Flow Diagram
               </Button>
             </form>
           </Form>
@@ -154,6 +171,13 @@ const FrameworksPage = () => {
           )}
           {messages.length === 0 && !isLoading && (
             <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
+          )}
+          {/* Display only the first user's message */}
+          {messages.length > 0 && messages[0].role === "user" && (
+            <div className="p-8 w-full flex items-start gap-x-8 rounded-lg bg-white border border-black/10">
+              <UserAvatar />
+              <p className="text-sm">{messages[0].content}</p>
+            </div>
           )}
           {imageData && (
             <div className="flex justify-center my-4">

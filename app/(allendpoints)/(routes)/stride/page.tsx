@@ -41,7 +41,7 @@ const PersonaPage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
-      amount: "Open source friendly."
+      amount: ""
     }
   });
 
@@ -127,8 +127,6 @@ const PersonaPage = () => {
                         disabled={isLoading} 
                         placeholder="Describe your app architecture here." 
                         {...field}
-                        minRows={3} // Set the minimum number of rows
-                        autoResize // Enable auto-resizing
                       />
                     </FormControl>
                   </FormItem>
@@ -165,7 +163,7 @@ const PersonaPage = () => {
               )}
             />
               <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
-                Get Advice
+                Get Report
               </Button>
             </form>
           </Form>
