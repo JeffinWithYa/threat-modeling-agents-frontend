@@ -39,10 +39,7 @@ export const FreeCounter = ({
               {apiLimitCount} / {MAX_FREE_COUNTS} Requests Made
             </p>
           </div>
-          <Button onClick={proModal.onOpen} variant="premium" className="w-full">
-            Support
-            
-          </Button>
+
         </CardContent>
       </Card>
     </div>

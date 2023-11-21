@@ -27,7 +27,7 @@ import { useEffect } from "react";
 
 import { formSchema, amountOptions } from "./constants";
 
-const FrameworksPage = () => {
+const DfdPage = () => {
   const router = useRouter();
   const proModal = useProModal();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
@@ -39,7 +39,7 @@ const FrameworksPage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
-      amount: "Open source friendly."
+      amount: ""
     }
   });
 
@@ -63,7 +63,7 @@ const FrameworksPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const userMessage = values.prompt; // Extract the user's message from the form values      
-      const response = await axios.post('/api/frameworks', { description: userMessage }, { responseType: 'blob' });
+      const response = await axios.post('/api/dfd', { description: userMessage }, { responseType: 'blob' });
 
       // Create an object URL from the blob
       const imageUrl = URL.createObjectURL(response.data);
@@ -191,5 +191,5 @@ const FrameworksPage = () => {
    );
 }
  
-export default FrameworksPage;
+export default DfdPage;
 

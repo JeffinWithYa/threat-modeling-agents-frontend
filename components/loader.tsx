@@ -11,7 +11,7 @@ export const Loader = () => {
         />
       </div>
       <p className="text-sm text-muted-foreground">
-        Analyzing request...
+        Analyzing request... Please allow up to 2-3 minutes for the AI to generate a response.
       </p>
     </div>
   );

@@ -28,7 +28,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { formSchema, amountOptions } from "./constants";
 
-const StridePage = () => {
+const StakeholdersPage = () => {
   const router = useRouter();
   const proModal = useProModal();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
@@ -66,7 +66,7 @@ const StridePage = () => {
       const userMessage = values.prompt; // Extract the user's message from the form values
 
       // Send the user's message to your API
-      const response = await axios.post('/api/stride', { description: userMessage }, { responseType: 'blob' });
+      const response = await axios.post('/api/stakeholders', { description: userMessage }, { responseType: 'blob' });
 
       // Create a Blob URL from the response data
       const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
@@ -93,8 +93,8 @@ const StridePage = () => {
   return ( 
     <div>
       <Heading
-        title="Apply the STRIDE Methodology to every component of your system."
-        description="Generate a report that describes the threats to your system and how to mitigate them."
+        title="Represent various Roles in the threat modeling exercide."
+        description="Generate a threat modeling report that includes input from various AI stakeholders including a compliance officer, a security engineer, an architect, and a business staholder."
         icon={MessageSquare}
         iconColor="text-violet-500"
         bgColor="bg-violet-500/10"
@@ -217,5 +217,5 @@ const StridePage = () => {
 
 }
  
-export default StridePage;
+export default StakeholdersPage;
 

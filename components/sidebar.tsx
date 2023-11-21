@@ -28,19 +28,19 @@ const routes = [
     label: 'Data Flow Diagram',
     icon: Component,
     color: "text-violet-700",
-    href: '/frameworks',
+    href: '/dfd',
   },
   {
     label: 'Attack Tree',
     icon: Network,
     color: "text-yellow-500",
-    href: '/frameworks',
+    href: '/attacktree',
   },
   {
     label: 'Stakeholder Report',
     icon: User,
     color: "text-pink-700",
-    href: '/frameworks',
+    href: '/stakeholders',
   }
 ];
 
@@ -62,6 +62,11 @@ const bottomRoutes = [
     label: 'Settings',
     icon: Settings,
     href: '/settings',
+  },
+  {
+    label: 'Whitepaper',
+    icon: Info,
+    href: '/whitepaper',
   }
 ];
 
