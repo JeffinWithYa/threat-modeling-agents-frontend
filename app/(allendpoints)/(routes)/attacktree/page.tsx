@@ -8,6 +8,8 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ChatCompletionRequestMessage } from "openai";
+import Image from "next/image";
+
 
 import { BotAvatar } from "@/components/bot-avatar";
 import { Heading } from "@/components/heading";
@@ -198,7 +200,13 @@ const AttackTreePage = () => {
           )}
           {imageData && (
             <div className="flex justify-center my-4">
-              <img src={imageData} alt="Generated Diagram" className="max-w-full h-auto" />
+                <Image
+                  src={imageData}
+                  alt="Generated Diagram"
+                  width={500} // Replace with actual width
+                  height={300} // Replace with actual height
+                  layout="responsive"
+                />
             </div>
           )}
 

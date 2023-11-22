@@ -33,7 +33,14 @@ export async function POST(req: Request) {
     }
 
     // Fetch request to FastAPI endpoint
-    const apiResponse = await fetch("http://127.0.0.1:4002/generate-stride-report-pdf", {
+    // Send POST request to your external API
+    const strideUrl = process.env.STRIDE_REPORT_API_URL;
+    if (!strideUrl) {
+      // Handle the error, maybe throw an exception or return an error response
+      throw new Error("STRIDE API URL is undefined. Please check your environment variables.");
+    }
+
+    const apiResponse = await fetch(strideUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

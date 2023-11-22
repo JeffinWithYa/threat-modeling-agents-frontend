@@ -39,7 +39,7 @@ export default function TermsPage() {
           <h2 className="text-xl font-semibold mb-4">Payments and Subscriptions</h2>
           <p className="mb-4">
             Users may choose to support the platform by subscribing to a premium plan. Payments are processed through Stripe. 
-            By choosing to pay or donate, you agree to Stripe's terms and conditions. Subscription fees are non-refundable, 
+            By choosing to pay or donate, you agree to the Stripe terms and conditions. Subscription fees are non-refundable, 
             except where required by law.
           </p>
           <p className="mb-4">

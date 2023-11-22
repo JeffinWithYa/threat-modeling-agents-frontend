@@ -47,6 +47,11 @@ const routes = [
 // Separate array for bottom links
 const bottomRoutes = [
   {
+    label: 'Whitepaper',
+    icon: Info,
+    href: '/whitepaper',
+  },
+  {
     label: 'Terms of Service',
     icon: Info, // You can change this icon
     href: '/terms',
@@ -62,11 +67,6 @@ const bottomRoutes = [
     label: 'Settings',
     icon: Settings,
     href: '/settings',
-  },
-  {
-    label: 'Whitepaper',
-    icon: Info,
-    href: '/whitepaper',
   }
 ];
 

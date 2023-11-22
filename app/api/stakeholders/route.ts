@@ -33,7 +33,15 @@ export async function POST(req: Request) {
       console.error('FASTAPI API key is not set in environment variables');
       return new NextResponse("Internal Server Error", { status: 500 });
     }
-    const apiResponse = await fetch("http://127.0.0.1:4001/generate-roles-report-pdf", {
+
+    // Fetch request to FastAPI endpoint
+    // Send POST request to your external API
+    const rolesUrl = process.env.ROLES_REPORT_API_URL;
+    if (!rolesUrl) {
+      // Handle the error, maybe throw an exception or return an error response
+      throw new Error("ROLES API URL is undefined. Please check your environment variables.");
+    }
+    const apiResponse = await fetch(rolesUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

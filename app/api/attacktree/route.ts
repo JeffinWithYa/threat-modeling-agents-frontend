@@ -35,7 +35,11 @@ export async function POST(
     }
 
     // Send POST request to your external API
-    const imageUrl = "http://127.0.0.1:4003/generate-diagram";
+    const imageUrl = process.env.ATTACK_TREE_API_URL;
+    if (!imageUrl) {
+      // Handle the error, maybe throw an exception or return an error response
+      throw new Error("ATTACK TREE API URL is undefined. Please check your environment variables.");
+    }
     const imageResponse = await fetch(imageUrl, {
       method: 'POST',
       headers: {
