@@ -28,10 +28,16 @@ export async function POST(req: Request) {
     }
 
     // Fetch request to FastAPI endpoint
+    const appRunnerKey = process.env.APP_RUNNER_KEY;
+    if (!appRunnerKey) {
+      console.error('FASTAPI API key is not set in environment variables');
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
     const apiResponse = await fetch("http://127.0.0.1:4001/generate-roles-report-pdf", {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key': appRunnerKey
       },
       body: JSON.stringify({ description }) // Sending the required description
     });

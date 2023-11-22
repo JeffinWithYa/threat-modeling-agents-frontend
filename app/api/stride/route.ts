@@ -26,12 +26,18 @@ export async function POST(req: Request) {
     if (!hasFreeTrial && !isSubscribedToPro) {
       return new NextResponse("Exceeded max number of requests.", { status: 403 });
     }
+    const appRunnerKey = process.env.APP_RUNNER_KEY;
+    if (!appRunnerKey) {
+      console.error('FASTAPI API key is not set in environment variables');
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
 
     // Fetch request to FastAPI endpoint
     const apiResponse = await fetch("http://127.0.0.1:4002/generate-stride-report-pdf", {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-api-key': appRunnerKey
       },
       body: JSON.stringify({ description }) // Sending the required description
     });

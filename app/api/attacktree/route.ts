@@ -28,12 +28,19 @@ export async function POST(
       return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
     }
 
+    const appRunnerKey = process.env.APP_RUNNER_KEY;
+    if (!appRunnerKey) {
+      console.error('FASTAPI API key is not set in environment variables');
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
+
     // Send POST request to your external API
     const imageUrl = "http://127.0.0.1:4003/generate-diagram";
     const imageResponse = await fetch(imageUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': appRunnerKey
       },
       body: JSON.stringify({ description, topnode }),
     });
