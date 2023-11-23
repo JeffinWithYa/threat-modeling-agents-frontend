@@ -52,21 +52,17 @@ export async function POST(
 
       // Check if the image was fetched successfully
     if (!imageResponse.ok) {
-      throw new Error(`Error fetching image: ${imageResponse.statusText}`);
+      throw new Error(`Error fetching task ID: ${imageResponse.statusText}`);
     }
 
-    // Assuming the response is an image, you may need to adjust this part
-    const imageBlob = await imageResponse.blob();
+    const taskResponse = await imageResponse.json();
+
 
     if (!isPro) {
       await incrementApiLimit();
     }
-
-    // Set the appropriate content type for the image response
-    const headers = new Headers();
-    headers.set('Content-Type', 'image/svg+xml'); // Adjust based on actual image type
     
-    return new NextResponse(imageBlob, { status: 200, headers });
+    return new NextResponse(JSON.stringify(taskResponse), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
     console.log('[CONVERSATION_ERROR]', error);
     return new NextResponse("Internal Error", { status: 500 });
