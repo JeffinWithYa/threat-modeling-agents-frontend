@@ -11,7 +11,7 @@ export const LoaderComputer = () => {
         />
       </div>
       <p className="text-sm text-muted-foreground">
-        Big computing... Please allow up to 1-2 minutes for the AI to generate a response.
+        Busy computing... Please allow up to 1-2 minutes for the AI to generate a response.
       </p>
     </div>
   );

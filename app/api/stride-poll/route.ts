@@ -36,10 +36,10 @@ export async function POST(
     }
 
     // Send POST request to your external API
-    const pollUrl = process.env.DFD_POLL_URL;
+    const pollUrl = process.env.STRIDE_POLL_URL;
     if (!pollUrl) {
       // Handle the error, maybe throw an exception or return an error response
-      throw new Error("DFD Poll URL is undefined. Please check your environment variables.");
+      throw new Error("STRIDE Poll URL is undefined. Please check your environment variables.");
     }
 
     const pollResponse = await fetch(`${pollUrl}/${task_id}`, {
@@ -49,7 +49,7 @@ export async function POST(
       },
     });
 
-      // Check if the image was fetched successfully
+      // Check if the pdf was fetched successfully
     if (!pollResponse.ok) {
       throw new Error(`Error polling task: ${pollResponse.statusText}`);
     }
@@ -67,18 +67,18 @@ export async function POST(
       } else {
         throw new Error(`Error polling task: ${pollResult.detail}`);
       }
-    } else if (contentType && contentType.includes('image/svg+xml')) {
+    } else if (contentType && contentType.includes('application/pdf')) {
       // Handle image response
-      const imageBlob = await pollResponse.blob();
+      const pdfBlob = await pollResponse.blob();
 
       if (!isPro) {
         await incrementApiLimit();
       }
 
       const headers = new Headers();
-      headers.set('Content-Type', 'image/svg+xml'); 
+      headers.set('Content-Type', 'application/pdf'); 
 
-      return new NextResponse(imageBlob, { status: 200, headers });
+      return new NextResponse(pdfBlob, { status: 200, headers });
     }
 
     

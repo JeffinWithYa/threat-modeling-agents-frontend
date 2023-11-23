@@ -31,7 +31,6 @@ import React, { useEffect } from "react";
 
 
 import { formSchema, amountOptions } from "./constants";
-import next from "next";
 
 const loaders = [LoaderComputer, LoaderMail, LoaderPaint, LoaderTranscript];
 
@@ -79,7 +78,6 @@ const DfdPage = () => {
       const taskId = startResponse.data.task_id; // Assuming response contains task_id
 
     // Update states
-    setMessages((current) => [...current, { role: 'user', content: userMessage }]);
     const pollInterval = 2000
     const changeLoader = () => {
       setCurrentLoader((prevLoader) => (prevLoader + 1) % loaders.length);
@@ -98,6 +96,8 @@ const DfdPage = () => {
           setTimeout(pollTaskStatus, pollInterval);
           changeLoader();
         } else if (pollResponse.status === 200) {
+          setMessages((current) => [...current, { role: 'user', content: userMessage }]);
+
           // Task complete, fetch the image
           setIsPolling(false); // Set polling to false when task is complete
 
@@ -115,6 +115,7 @@ const DfdPage = () => {
 
       
     pollTaskStatus();
+    router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen();
