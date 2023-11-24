@@ -76,7 +76,7 @@ const AttackTreePage = () => {
     try {
       const userMessage = values.prompt; // Extract the user's message from the form values      
       const topnode = values.topnode; // Extract the user's message from the form values      
-      const startResponse = await axios.post('/api/attacktree', { description: userMessage, topnode: topnode }, { responseType: 'blob' });
+      const startResponse = await axios.post('/api/attacktree', { description: userMessage, topnode: topnode });
       const taskId = startResponse.data.task_id; // Assuming response contains task_id
 
 
@@ -87,31 +87,31 @@ const AttackTreePage = () => {
       };
 
       setIsPolling(true); // Set polling to true when polling starts
-      const pollTaskStatus = async () => {
-        try {
-          const pollResponse = await axios.post('/api/attacktree-poll', { task_id: taskId }, { responseType: 'blob' });
-          console.log("POLLING NOW!")
-          console.log(pollResponse.data);
-          if (pollResponse.status === 202) {
-            // Task still processing, continue polling
-            setTimeout(pollTaskStatus, pollInterval);
-            changeLoader();
-          } else if (pollResponse.status === 200) {
-            setMessages((current) => [...current, { role: 'user', content: userMessage }]);
-  
-            // Task complete, fetch the image
-            setIsPolling(false); // Set polling to false when task is complete
-  
-            const imageUrl = URL.createObjectURL(pollResponse.data);
-            setImageData(imageUrl);
-          }
-        } catch (pollError) {
-          setIsPolling(false); // Set polling to false if an error occurs
-  
-          toast.error("Error while polling the task status.");
-          console.error(pollError);
+    const pollTaskStatus = async () => {
+      try {
+        const pollResponse = await axios.post('/api/attacktree-poll', { task_id: taskId }, { responseType: 'blob' });
+        console.log("POLLING NOW!")
+        console.log(pollResponse.data);
+        if (pollResponse.status === 202) {
+          // Task still processing, continue polling
+          setTimeout(pollTaskStatus, pollInterval);
+          changeLoader();
+        } else if (pollResponse.status === 200) {
+          setMessages((current) => [...current, { role: 'user', content: userMessage }]);
+
+          // Task complete, fetch the image
+          setIsPolling(false); // Set polling to false when task is complete
+
+          const imageUrl = URL.createObjectURL(pollResponse.data);
+          setImageData(imageUrl);
         }
-      };
+      } catch (pollError) {
+        setIsPolling(false); // Set polling to false if an error occurs
+
+        toast.error("Error while polling the task status.");
+        console.error(pollError);
+      }
+    };
   
   
         

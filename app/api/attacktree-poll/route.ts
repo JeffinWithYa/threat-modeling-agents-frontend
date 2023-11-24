@@ -20,7 +20,7 @@ export async function POST(
     if (!task_id) {
       return new NextResponse("No task ID provided", { status: 400 });
     }
-    console.log('TASKID: ', task_id)
+    // console.log('in ATTACK-POLL, TASKID: ', task_id)
 
     const freeTrial = await checkApiLimit();
     const isPro = await checkSubscription();
