@@ -17,10 +17,10 @@ export const LandingHero = () => {
           <TypewriterComponent
             options={{
               strings: [
-                "Applying STRIDE to your app components.",
-                "Mitigating threats to your app.",
-                "Creating data flow diagrams.",
-                "Creating attack trees for your app."
+                "Applying STRIDE.",
+                "Assessing Risk.",
+                "Data flow diagrams.",
+                "Attack trees."
               ],
               autoStart: true,
               loop: true,
@@ -29,12 +29,12 @@ export const LandingHero = () => {
         </div>
       </div>
       <div className="text-sm md:text-xl font-light text-zinc-400">
-        Get AI and human-driven insights on your software licenses, frameworks, and compliance.
+        Get AI and human-driven insights on your software, architecture, and more.
       </div>
       <div>
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button variant="premium" className="md:text-lg p-4 md:p-6 rounded-full font-semibold">
-            Get Compliance Help Now
+            Get Threat Modeling Help Now
           </Button>
         </Link>
       </div>
