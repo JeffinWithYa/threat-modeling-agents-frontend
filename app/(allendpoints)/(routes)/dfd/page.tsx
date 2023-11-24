@@ -77,13 +77,13 @@ const DfdPage = () => {
       const startResponse = await axios.post('/api/dfd', { description: userMessage });
       const taskId = startResponse.data.task_id; // Assuming response contains task_id
 
-    // Update states
-    const pollInterval = 2000
-    const changeLoader = () => {
-      setCurrentLoader((prevLoader) => (prevLoader + 1) % loaders.length);
-    };
+      // Update states
+      const pollInterval = 2000
+      const changeLoader = () => {
+        setCurrentLoader((prevLoader) => (prevLoader + 1) % loaders.length);
+      };
 
-    setIsPolling(true); // Set polling to true when polling starts
+      setIsPolling(true); // Set polling to true when polling starts
 
 
     const pollTaskStatus = async () => {

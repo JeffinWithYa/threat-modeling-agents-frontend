@@ -17,16 +17,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { Loader } from "@/components/loader";
+import { LoaderComputer } from "@/components/loader-computer";
+import { LoaderMail } from "@/components/loader-mail";
+import { LoaderPaint } from "@/components/loader-paint";
+import { LoaderTranscript } from "@/components/loader-transcript";
 import { UserAvatar } from "@/components/user-avatar";
 import { Empty } from "@/components/ui/empty";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea"
 
-
-
 import { formSchema, amountOptions } from "./constants";
+const loaders = [LoaderComputer, LoaderMail, LoaderPaint, LoaderTranscript];
+
 
 const StakeholdersPage = () => {
   const router = useRouter();
@@ -35,6 +39,8 @@ const StakeholdersPage = () => {
   
   // ADDED FOR PDF GENERATION
   const [pdfUrl, setPdfUrl] = useState<string|undefined>(undefined); // State to store the PDF URL
+  const [currentLoader, setCurrentLoader] = useState(0); // State to track the current loader
+  const [isPolling, setIsPolling] = useState(false); // New state for tracking polling status
 
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -66,24 +72,58 @@ const StakeholdersPage = () => {
       const userMessage = values.prompt; // Extract the user's message from the form values
 
       // Send the user's message to your API
-      const response = await axios.post('/api/stakeholders', { description: userMessage }, { responseType: 'blob' });
+      const startResponse = await axios.post('/api/stakeholders', { description: userMessage });
+      const taskId = startResponse.data.task_id; // Assuming response contains task_id
+      const pollInterval = 2000
+      const changeLoader = () => {
+        setCurrentLoader((prevLoader) => (prevLoader + 1) % loaders.length);
+      };
 
-      // Create a Blob URL from the response data
-      const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      console.log(pdfUrl);
+      setIsPolling(true); // Set polling to true when polling starts
+
+      const pollTaskStatus = async () => {
+        try {
+          const pollResponse = await axios.post('/api/stakeholders-poll', { task_id: taskId }, { responseType: 'blob' });
+          console.log("POLLING NOW!")
+          //console.log(pollResponse.data);
+          if (pollResponse.status === 202) {
+            // Task still processing, continue polling
+            setTimeout(pollTaskStatus, pollInterval);
+            changeLoader();
+          } else if (pollResponse.status === 200) {
+            console.log("POLLING COMPLETE!")
+            setMessages((current) => [...current, { role: 'user', content: userMessage }]);
   
-      // Update the messages state with the user's message and the API response
-      setMessages((current) => [...current, { role: "user", content: userMessage }, { role: "system", content: response.data }]);
+            // Task complete, fetch the image
+            setIsPolling(false); // Set polling to false when task is complete
   
-      setPdfUrl(pdfUrl); // Update the state with the Blob URL
-      
-      form.reset();
+            const pdfBlob = new Blob([pollResponse.data], { type: 'application/pdf' });
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            console.log(pdfUrl);
+            setPdfUrl(pdfUrl); // Update the state with the Blob URL
+
+          }
+        } catch (pollError) {
+          setIsPolling(false); // Set polling to false if an error occurs
+  
+          toast.error("Error while polling the task status.");
+          console.error(pollError);
+        }
+      };
+  
+  
+        
+      pollTaskStatus();
+      router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen();
+        setIsPolling(false); // Set polling to false if an error occurs
+
       } else {
         toast.error("Something went wrong.");
+        setIsPolling(false); // Set polling to false if an error occurs
+
       }
     } finally {
       router.refresh();
@@ -124,7 +164,7 @@ const StakeholdersPage = () => {
                     <FormControl className="m-0 p-0">
                       <Textarea
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading} 
+                        disabled={isLoading || isPolling} 
                         placeholder="Describe your app architecture here." 
                         {...field}
                       />
@@ -138,7 +178,7 @@ const StakeholdersPage = () => {
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-2">
                     <Select 
-                      disabled={isLoading} 
+                      disabled={isLoading || isPolling} 
                       onValueChange={field.onChange} 
                       value={field.value} 
                       defaultValue={field.value}
@@ -162,16 +202,16 @@ const StakeholdersPage = () => {
                   </FormItem>
               )}
             />
-              <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
+              <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading || isPolling} size="icon">
                 Get Report
               </Button>
             </form>
           </Form>
         </div>
         <div className="space-y-4 mt-4">
-          {isLoading && (
+          {(isLoading || isPolling ) && (
             <div className="p-8 rounded-lg w-full flex items-center justify-center bg-slate-100">
-              <Loader />
+              {React.createElement(loaders[currentLoader])}
             </div>
           )}
           {/* Display an empty state if no messages and not loading */}
@@ -197,13 +237,7 @@ const StakeholdersPage = () => {
                 title="PDF Viewer"
               ></iframe>
               {/* Download PDF Button */}
-            <a
-              href={pdfUrl}
-              download="tm_report.pdf" 
-              className="mt-2 text-blue-600 hover:text-blue-800"
-            >
-              Download PDF
-            </a>
+
           </div>
             
           )}
