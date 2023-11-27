@@ -83,15 +83,20 @@ const StakeholdersPage = () => {
 
       const pollTaskStatus = async () => {
         try {
-          const pollResponse = await axios.post('/api/stakeholders-poll', { task_id: taskId }, { responseType: 'blob' });
+          const pollResponse = await axios.post('/api/stakeholders-poll', { task_id: taskId });
           console.log("POLLING NOW!")
           //console.log(pollResponse.data);
           if (pollResponse.status === 202) {
             // Task still processing, continue polling
+            const taskMessage = pollResponse.data.detail || "Task is still processing...";
+            console.log(taskMessage)
+            setMessages((current) => [...current, { role: 'system', content: taskMessage }]);
+
             setTimeout(pollTaskStatus, pollInterval);
             changeLoader();
           } else if (pollResponse.status === 200) {
             console.log("POLLING COMPLETE!")
+            const pollResponse = await axios.post('/api/stakeholders-poll', { task_id: taskId }, { responseType: 'blob' });
             setMessages((current) => [...current, { role: 'user', content: userMessage }]);
   
             // Task complete, fetch the image
