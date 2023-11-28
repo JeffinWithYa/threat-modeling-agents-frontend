@@ -23,7 +23,7 @@ import { LoaderMail } from "@/components/loader-mail";
 import { LoaderPaint } from "@/components/loader-paint";
 import { LoaderTranscript } from "@/components/loader-transcript";
 import { UserAvatar } from "@/components/user-avatar";
-import { Empty } from "@/components/ui/empty";
+import { EmptyDFD } from "@/components/ui/emptydfd";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea"
@@ -281,7 +281,7 @@ const DfdPage = () => {
             </div>
           )}
           {messages.length === 0 && !isLoading && (
-            <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
+            <EmptyDFD label="Provide feedback on this site by using the chat widget in the bottom right corner." />
           )}
           {messages.map((message, index) => (
             <div 

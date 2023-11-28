@@ -24,7 +24,7 @@ import { LoaderMail } from "@/components/loader-mail";
 import { LoaderPaint } from "@/components/loader-paint";
 import { LoaderTranscript } from "@/components/loader-transcript";
 import { UserAvatar } from "@/components/user-avatar";
-import { Empty } from "@/components/ui/empty";
+import { EmptyAttackTree } from "@/components/ui/emptyattacktree";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea"
@@ -295,7 +295,7 @@ const AttackTreePage = () => {
             </div>
           )}
           {messages.length === 0 && !isLoading && (
-            <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
+            <EmptyAttackTree label="Provide feedback on this site by using the chat widget in the bottom right corner." />
           )}
           {/* Display only the first user's message */}
           {messages.length > 0 && messages[0].role === "user" && (

@@ -22,7 +22,7 @@ import { LoaderMail } from "@/components/loader-mail";
 import { LoaderPaint } from "@/components/loader-paint";
 import { LoaderTranscript } from "@/components/loader-transcript";
 import { UserAvatar } from "@/components/user-avatar";
-import { Empty } from "@/components/ui/empty";
+import { EmptyStakeholders } from "@/components/ui/emptystakeholders";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import React, { useEffect } from "react";
@@ -289,7 +289,7 @@ const StakeholdersPage = () => {
           )}
           {/* Display an empty state if no messages and not loading */}
           {messages.length === 0 && !isLoading && (
-            <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
+            <EmptyStakeholders label="Provide feedback on this site by using the chat widget in the bottom right corner." />
           )}
           {messages.map((message, index) => (
             <div 
