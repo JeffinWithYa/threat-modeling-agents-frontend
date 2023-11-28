@@ -42,6 +42,8 @@ const StakeholdersPage = () => {
   const [currentLoader, setCurrentLoader] = useState(0); // State to track the current loader
   const [isPolling, setIsPolling] = useState(false); // New state for tracking polling status
   const [selectedDropdownValue, setSelectedDropdownValue] = useState("");
+  const [pollCounter, setPollCounter] = useState(0);
+
 
 
 
@@ -78,11 +80,15 @@ const StakeholdersPage = () => {
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setMessages([]);
+
       const userMessage = values.prompt; // Extract the user's message from the form values
 
       // Send the user's message to your API
       const startResponse = await axios.post('/api/stakeholders', { description: userMessage });
       const taskId = startResponse.data.task_id; // Assuming response contains task_id
+      setMessages((current) => [...current, { role: 'user', content: userMessage }]);
+
       const pollInterval = 2000
       const changeLoader = () => {
         setCurrentLoader((prevLoader) => (prevLoader + 1) % loaders.length);
@@ -99,10 +105,63 @@ const StakeholdersPage = () => {
             // Task still processing, continue polling
             const taskMessage = pollResponse.data.detail || "Task is still processing...";
             console.log(taskMessage)
-            setMessages((current) => [...current, { role: 'system', content: taskMessage }]);
+            
 
             setTimeout(pollTaskStatus, pollInterval);
             changeLoader();
+            try {
+              const lastMessageResponse = await axios.post('/api/lastmessage/', { task_id: taskId, endpoint: "stakeholders" });
+              if (lastMessageResponse.status === 200) {
+                const newLastMessage = lastMessageResponse.data.last_message;
+                // Handle the last message as needed
+                console.log("Last message from conversation log:", newLastMessage);
+                // Optionally, you can add this message to your UI as well
+                //setMessages(currentMessages => [...currentMessages, { role: 'system', content: lastMessage }]);
+                setMessages(currentMessages => {
+                  if (currentMessages.length > 0 && currentMessages[currentMessages.length - 1].content) {
+                    const lastCurrentMessage = currentMessages[currentMessages.length - 1].content;
+            
+                    // Check if the new message is the same as the last one
+                    if (newLastMessage === lastCurrentMessage) {
+                      setPollCounter(prevCounter => prevCounter + 1);
+  
+                      if (pollCounter >= 19) {
+                        setIsPolling(false);
+                        toast.error("Polling limit reached without new updates.");
+                        return currentMessages;
+                      }
+                      return currentMessages; // Return the current state without change
+  
+            
+                    } else {
+                      setPollCounter(0);
+                    }
+            
+                    // Find the overlap and trim it
+                    let trimmedMessage = newLastMessage;
+                    for (let i = 0; i < lastCurrentMessage!.length; i++) {
+                      if (newLastMessage.startsWith(lastCurrentMessage!.slice(i))) {
+                        trimmedMessage = newLastMessage.slice(lastCurrentMessage!.length - i);
+                        break;
+                      }
+          }
+  
+          // Add the trimmed message if it's not empty
+          if (trimmedMessage.trim().length > 0) {
+            return [...currentMessages, { role: 'system', content: trimmedMessage.trim() }];
+          } else {
+            return currentMessages;
+          }
+                  }
+            
+                  // If there are no messages yet or no duplication/overlap, add the new message
+                  return [...currentMessages, { role: 'system', content: newLastMessage }];
+                });
+  
+              }
+            } catch (err) {
+              console.error("Error fetching last message:", err);
+            }
           } else if (pollResponse.status === 200) {
             console.log("POLLING COMPLETE!")
             const pollResponse = await axios.post('/api/stakeholders-poll', { task_id: taskId }, { responseType: 'blob' });
@@ -232,13 +291,15 @@ const StakeholdersPage = () => {
           {messages.length === 0 && !isLoading && (
             <Empty label="Provide feedback on this site by using the chat widget in the bottom right corner." />
           )}
-          {/* Display only the first user's message */}
-          {messages.length > 0 && messages[0].role === "user" && (
-            <div className="p-8 w-full flex items-start gap-x-8 rounded-lg bg-white border border-black/10">
-              <UserAvatar />
-              <p className="text-sm">{messages[0].content}</p>
+          {messages.map((message, index) => (
+            <div 
+              key={index}
+              className={`p-8 w-full flex items-start gap-x-8 rounded-lg ${message.role === "user" ? "bg-white border border-black/10" : "bg-muted"}`}
+            >
+              {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+              <p className="text-sm">{message.content}</p>
             </div>
-          )}
+          ))}
 
           {/* PDF Viewer */}
           {pdfUrl && (
