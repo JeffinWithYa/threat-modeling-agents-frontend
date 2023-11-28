@@ -41,13 +41,15 @@ const StakeholdersPage = () => {
   const [pdfUrl, setPdfUrl] = useState<string|undefined>(undefined); // State to store the PDF URL
   const [currentLoader, setCurrentLoader] = useState(0); // State to track the current loader
   const [isPolling, setIsPolling] = useState(false); // New state for tracking polling status
+  const [selectedDropdownValue, setSelectedDropdownValue] = useState("");
+
 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
-      amount: ""
+      amount: amountOptions[0].value,
     }
   });
 
@@ -61,9 +63,16 @@ const StakeholdersPage = () => {
   useEffect(() => {
     const selectedAmountOption = amountOptions.find(option => option.value === selectedOption);
     if (selectedAmountOption) {
-      setValue("prompt", selectedAmountOption.value); // assuming each option has a description field
+      setSelectedDropdownValue(selectedAmountOption.value);
     }
-  }, [selectedOption, setValue]);
+  }, [selectedOption]);
+
+  // Use useEffect to conditionally update the prompt field when the dropdown changes
+  useEffect(() => {
+    if (selectedDropdownValue) {
+      setValue("prompt", selectedDropdownValue);
+    }
+  }, [selectedDropdownValue, setValue, form]);
 
   const isLoading = form.formState.isSubmitting;
   

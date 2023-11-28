@@ -31,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea"
 import React, { useEffect } from "react";
 
 
-import { formSchema, amountOptions } from "./constants";
+import { formSchema, amountOptions, topNodeOptions } from "./constants";
 
 const loaders = [LoaderComputer, LoaderMail, LoaderPaint, LoaderTranscript];
 
@@ -44,14 +44,18 @@ const AttackTreePage = () => {
   const [imageData, setImageData] = useState<string | null>(null);
   const [currentLoader, setCurrentLoader] = useState(0); // State to track the current loader
   const [isPolling, setIsPolling] = useState(false); // New state for tracking polling status
+  const [selectedDropdownValue, setSelectedDropdownValue] = useState("");
+  const [selectedTNDropdownValue, setSelectedTNDropdownValue] = useState("");
+
 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
-      amount: "",
-      topnode: "Data breach"
+      topnode: "",
+      amount: amountOptions[0].value,
+      topdrop: topNodeOptions[0].value,
     }
   });
 
@@ -61,14 +65,37 @@ const AttackTreePage = () => {
   // Watch for changes in the dropdown selection
   const selectedOption = watch("amount");
 
+  const selectedTNOption = watch("topdrop");
+
   // Use useEffect to update the prompt field when the dropdown changes
   useEffect(() => {
     const selectedAmountOption = amountOptions.find(option => option.value === selectedOption);
     if (selectedAmountOption) {
-      setValue("prompt", selectedAmountOption.value); // assuming each option has a description field
+      setSelectedDropdownValue(selectedAmountOption.value);
     }
-  }, [selectedOption, setValue]);
+  }, [selectedOption]);
 
+  // Use useEffect to update the prompt field when the dropdown changes
+  useEffect(() => {
+    const selectedTNAmountOption = topNodeOptions.find(option => option.value === selectedTNOption);
+    if (selectedTNAmountOption) {
+      setSelectedTNDropdownValue(selectedTNAmountOption.value);
+    }
+  }, [selectedTNOption]);
+
+  // Use useEffect to conditionally update the prompt field when the dropdown changes
+  useEffect(() => {
+    if (selectedDropdownValue) {
+      setValue("prompt", selectedDropdownValue);
+    }
+  }, [selectedDropdownValue, setValue, form]);
+
+  // Use useEffect to conditionally update the prompt field when the dropdown changes
+  useEffect(() => {
+    if (selectedTNDropdownValue) {
+      setValue("topnode", selectedTNDropdownValue);
+    }
+  }, [selectedTNDropdownValue, setValue, form]);
 
   const isLoading = form.formState.isSubmitting;
   
@@ -166,10 +193,12 @@ const AttackTreePage = () => {
                   <FormItem className="col-span-12 lg:col-span-8">
                     <FormControl className="m-0 p-0">
                       <Textarea
-                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                          className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent bg-gray-100"
                           disabled={isLoading || isPolling} 
                           placeholder="Describe your app architecture here." 
                           {...field}
+                          onChange={(e) => {field.onChange(e)}}
+
                       />
                     </FormControl>
                   </FormItem>
@@ -214,15 +243,48 @@ const AttackTreePage = () => {
                   <FormItem className="col-span-12 lg:col-span-8">
                     <FormControl className="m-0 p-0">
                       <Input
-                          className="border-0 border-gray-300 outline-none focus:border-blue-500 focus-visible:ring-transparent"
+                          className="border-0 border-gray-300 outline-none focus:border-blue-500 focus-visible:ring-transparent bg-gray-100"
                           disabled={isLoading} 
                           placeholder="Describe the top node of your attack tree (e.g., 'Data breach')." 
                           {...field}
+                          onChange={(e) => {field.onChange(e)}}
+
                       />
                     </FormControl>
                   </FormItem>
                 )}
+                
               />
+              <FormField
+                control={form.control}
+                name="topdrop"
+                render={({ field }) => (
+                  <FormItem className="col-span-12 lg:col-span-2">
+                    <Select 
+                      disabled={isLoading || isPolling} 
+                      onValueChange={field.onChange} 
+                      value={field.value} 
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue defaultValue={field.value} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {topNodeOptions.map((option) => (
+                          <SelectItem 
+                            key={option.value} 
+                            value={option.value}
+                          >
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+              )}
+            />
             </form>
           </Form>
         </div>
