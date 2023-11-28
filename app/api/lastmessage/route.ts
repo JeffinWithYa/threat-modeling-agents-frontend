@@ -10,7 +10,8 @@ export async function POST(req: Request) {
     console.log('POST for LAST MESSAGE');
     const { userId } = auth();
     const body = await req.json();
-    const { task_id } = body;
+    const { task_id, endpoint } = body;
+    
 
 
     if (!userId) {
@@ -35,7 +36,22 @@ export async function POST(req: Request) {
     }
 
     // Update the endpoint URL
-    const lastMessageUrl = process.env.LAST_MESSAGE_API_URL;
+    let lastMessageUrl;
+    switch (endpoint) {
+      case 'stride':
+        lastMessageUrl = process.env.LAST_MESSAGE_STRIDE_API_URL;
+        break;
+      case 'stakeholders':
+        lastMessageUrl = process.env.LAST_MESSAGE_ROLES_API_URL;
+        break;
+      case 'dfd':
+        lastMessageUrl = process.env.LAST_MESSAGE_DFD_API_URL;
+        break;
+      default:
+        console.log("No lastmessage endpoint provided.")
+    }
+
+
     if (!lastMessageUrl) {
       throw new Error("Last Message API URL is undefined. Please check your environment variables.");
     }

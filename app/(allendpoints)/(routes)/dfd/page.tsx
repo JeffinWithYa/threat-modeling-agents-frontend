@@ -99,15 +99,15 @@ const DfdPage = () => {
     const pollTaskStatus = async () => {
       try {
         const pollResponse = await axios.post('/api/dfd-poll', { task_id: taskId }, { responseType: 'blob' });
-        console.log("POLLING NOW!")
-        console.log(pollResponse.data);
+        // console.log("POLLING NOW!")
+        // console.log(pollResponse.data);
         if (pollResponse.status === 202) {
           // Task still processing, continue polling
           setTimeout(pollTaskStatus, pollInterval);
           changeLoader();
           // Call the /convo/{task_id} endpoint to get the last message
           try {
-            const lastMessageResponse = await axios.post('/api/lastmessage/', { task_id: taskId });
+            const lastMessageResponse = await axios.post('/api/lastmessage/', { task_id: taskId, endpoint: "dfd" });
             if (lastMessageResponse.status === 200) {
               const newLastMessage = lastMessageResponse.data.last_message;
               // Handle the last message as needed

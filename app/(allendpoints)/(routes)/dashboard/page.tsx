@@ -15,7 +15,7 @@ export default function HomePage() {
     <div>
       <div className="mb-8 space-y-4">
         <h2 className="text-2xl md:text-4xl font-bold text-center">
-          Threat Modeling with Generative AI
+          Threat Modeling with Multi-Agent Generative AI
         </h2>
         <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
           Choose from the options below, or use the chat widget in the bottom right corner to give feedback/discuss security with a human (pending their availability).

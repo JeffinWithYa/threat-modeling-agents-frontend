@@ -11,7 +11,7 @@ import './globals.css'
 const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Threat Modeling with Generative AI',
+  title: 'Threat Modeling with Multi-Agent Generative AI',
   description: 'AI Powered Threat Modeling Solution',
 }
 
