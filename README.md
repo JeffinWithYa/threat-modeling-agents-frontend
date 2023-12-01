@@ -1,6 +1,6 @@
 # Threat Modeling with Multi-Agent Generative AI - Get help running your threat modeling exercises
 
-![](https://github.com/JeffinWithYa/license-compliance-ai/blob/main/killer_compliance_demo.gif)
+![](https://github.com/JeffinWithYa/threat-modeling-agents-frontend/blob/main/dfd_demo_edited.gif)
 
 
 This is an open source tool that uses the Autogen multi-agent framework and GPT4 to help working professionals quickly generate data flow diagrams, attack trees, and threat modeling reports from a description of their app architectures.
