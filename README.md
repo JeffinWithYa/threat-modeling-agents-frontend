@@ -84,3 +84,5 @@ npx prisma db push
 ```shell
 npm run dev
 ```
+
+This repo began as a fork of: https://github.com/AntonioErdeljac/next13-ai-saas
