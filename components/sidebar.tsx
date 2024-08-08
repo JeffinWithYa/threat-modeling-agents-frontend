@@ -47,9 +47,9 @@ const routes = [
 // Separate array for bottom links
 const bottomRoutes = [
   {
-    label: 'Whitepaper',
+    label: 'Autogen Whitepaper',
     icon: Info,
-    href: '/whitepaper',
+    href: 'https://arxiv.org/abs/2308.08155',
   },
   {
     label: 'Terms of Service',

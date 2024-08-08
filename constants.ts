@@ -1,6 +1,6 @@
 import { Code, ImageIcon, MessageSquare, Music, VideoIcon, ListChecks, User, Framer, Component, Network } from "lucide-react";
 
-export const MAX_FREE_COUNTS = 100;
+export const MAX_FREE_COUNTS = 5;
 
 export const tools = [
   {
@@ -18,14 +18,14 @@ export const tools = [
     href: '/stride',
   },
   {
-    label: 'Data Flow Diagram (generates image with PyTM)',
+    label: 'Data Flow Diagram (generates diagram with PyTM)',
     icon: Component,
     color: "text-green-700",
     bgColor: "bg-green-700/10",
     href: '/dfd',
   },
   {
-    label: 'Attack Tree (generates image with GraphViz)',
+    label: 'Attack Tree (generates diagram with GraphViz)',
     icon: Network,
     color: "text-green-700",
     bgColor: "bg-green-700/10",
