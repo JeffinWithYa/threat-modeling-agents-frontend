@@ -86,3 +86,7 @@ npm run dev
 ```
 
 This repo began as a fork of: https://github.com/AntonioErdeljac/next13-ai-saas
+
+### DevOps and Contributing
+
+All PRs are scanned for code quality with Codacy and reviewed by the author. Please feel free to submit a PR for review.
